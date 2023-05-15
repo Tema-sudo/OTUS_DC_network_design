@@ -22,3 +22,6 @@ Y=2-4 - reserved;
 Y=5-9 - p2p link;
 Y=255, (255-1.... )- services;
 - Z - значение по порядку.
+
+Таблица адресов
+|Name|Loopback0|P2P-Spine1-Leaf|P2P-Spine2-Leaf|
