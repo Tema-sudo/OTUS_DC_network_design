@@ -16,7 +16,6 @@
 Формат IP-адреса: 10.X.Y.Z, где
 - X - номер Дата Центра по порядку
 - Y - распределяется как:
-
 Y=0 - Loopback Spine; 
 Y=1 - Loopback Leaf;
 Y=2-4 - reserved; 
