@@ -24,4 +24,11 @@ Y=255, (255-1.... )- services;
 - Z - значение по порядку.
 
 Таблица адресов
+
 |Name|Loopback0|P2P-Spine1-Leaf|P2P-Spine2-Leaf|
+|---|---|---|---|
+Spine-1
+Spine-2
+Leaf-1
+Leaf-2
+Leaf-3
