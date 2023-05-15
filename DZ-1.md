@@ -20,5 +20,5 @@ Y=0 - Loopback Spine;
 Y=1 - Loopback Leaf;
 Y=2-4 - reserved; 
 Y=5-9 - p2p link;
-Y=255, 255-1.... - services.
+Y=255, 255-1.... - services;
 - Z - значение по порядку.
