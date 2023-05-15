@@ -25,10 +25,10 @@ Y=255, (255-1.... )- services;
 
 Таблица адресов
 
-|Name|Loopback0|P2P-Spine1-Leaf|P2P-Spine2-Leaf|
+|Name|Loopback|P2P-Spine1-Leaf|P2P-Spine2-Leaf|
 |---|---|---|---|
-Spine-1
-Spine-2
-Leaf-1
-Leaf-2
-Leaf-3
+Spine-1|10.1.0.1|
+Spine-2|10.1.0.2|
+Leaf-1|10.1.1.1|10.1.5.1|
+Leaf-2|10.1.1.2|
+Leaf-3|10.1.1.3|
