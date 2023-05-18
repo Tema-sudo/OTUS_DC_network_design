@@ -122,7 +122,7 @@ interface Loopback0
 hostname Leaf-2
 !
 interface Ethernet1
-   description ### to_Spine-1_eth1 ###
+   description ### to_Spine-1_eth2 ###
    no switchport
    ip address 10.1.5.6/30
 !
