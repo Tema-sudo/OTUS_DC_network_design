@@ -67,3 +67,92 @@ interface Loopback0
    ip address 10.1.0.1/32
 !
 ```
+
+##### Spine-2 #####
+
+```
+!
+hostname Spine-2
+!
+interface Ethernet1
+   description ### to_Leaf-1_eth1 ###
+   no switchport
+   ip address 10.1.5.13/30
+!
+interface Ethernet2
+   description ### to_Leaf-2_eth2 ###
+   no switchport
+   ip address 10.1.5.17/30
+!
+interface Ethernet3
+   description ### to_Leaf-3_eth2 ###
+   no switchport
+   ip address 10.1.5.21/30
+!
+interface Loopback0
+   ip address 10.1.0.2/32
+!
+```
+
+##### Leaf-1 #####
+
+```
+!
+hostname Leaf-1
+!
+interface Ethernet1
+   description ### to_Spine-1_eth1 ###
+   no switchport
+   ip address 10.1.5.2/30
+!
+interface Ethernet2
+   description ### to_Spine-2_eth1 ###
+   no switchport
+   ip address 10.1.5.14/30
+!
+interface Loopback0
+   ip address 10.1.1.1/32
+!
+```
+
+##### Leaf-2 #####
+
+```
+!
+hostname Leaf-2
+!
+interface Ethernet1
+   description ### to_Spine-1_eth1 ###
+   no switchport
+   ip address 10.1.5.6/30
+!
+interface Ethernet2
+   description ### to_Spine-2_eth2 ###
+   no switchport
+   ip address 10.1.5.18/30
+!
+interface Loopback0
+   ip address 10.1.1.2/32
+!
+```
+
+##### Leaf-3 #####
+
+```
+!
+hostname Leaf-3
+!
+interface Ethernet1
+   description ### to_Spine-1_eth3 ###
+   no switchport
+   ip address 10.1.5.10/30
+!
+interface Ethernet2
+   description ### to_Spine-2_eth3 ###
+   no switchport
+   ip address 10.1.5.22/30
+!
+interface Loopback0
+   ip address 10.1.1.3/32
+!
+```
