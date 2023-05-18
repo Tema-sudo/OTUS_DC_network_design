@@ -7,7 +7,7 @@
 ### Решение.
 #### 1. Топология сети CLOS ####
 
-![dz-1_topo_clos](dz1_clos_topo.png)(https://github.com/Tema-sudo/OTUS_DC_network_design/blob/5a18dde0096c86c8f75133b72f1e875ea0f02a87/lab_01/dz-1_topo_clos.drawio)
+![dz-1_topo_clos](dz1_clos_topo.png)
 
 #### 2. Распределение адресного пространства ####
 Для распределения адресного пространства в ЦОД выбран частный диапазон IP сетей: 10.0.0.0/8.
