@@ -43,6 +43,7 @@ Architecture:           i386
 Internal build version: 4.20.1F-6820520.4201F
 Internal build ID:      790a11e8-5aaf-4be7-a11a-e61795d05b91
 ```
+
 ##### Spine-1 #####
 ```
 !
@@ -69,7 +70,6 @@ interface Loopback0
 ```
 
 ##### Spine-2 #####
-
 ```
 !
 hostname Spine-2
@@ -95,7 +95,6 @@ interface Loopback0
 ```
 
 ##### Leaf-1 #####
-
 ```
 !
 hostname Leaf-1
@@ -116,7 +115,6 @@ interface Loopback0
 ```
 
 ##### Leaf-2 #####
-
 ```
 !
 hostname Leaf-2
@@ -137,7 +135,6 @@ interface Loopback0
 ```
 
 ##### Leaf-3 #####
-
 ```
 !
 hostname Leaf-3
