@@ -44,26 +44,26 @@ Internal build version: 4.20.1F-6820520.4201F
 Internal build ID:      790a11e8-5aaf-4be7-a11a-e61795d05b91
 ```
 ##### Spine-1 #####
-
->!
->hostname Spine-1
->!
->interface Ethernet1
->   description ### to_Leaf-1_eth1 ###
->   no switchport
->   ip address 10.1.5.1/30
->!
->interface Ethernet2
->   description ### to_Leaf-2_eth1 ###
->   no switchport
->   ip address 10.1.5.5/30
->!
->interface Ethernet3
->   description ### to_Leaf-3_eth1 ###
->   no switchport
->   ip address 10.1.5.9/30
->!
->interface Loopback0
->   ip address 10.1.0.1/32
->!
-
+```
+!
+hostname Spine-1
+!
+interface Ethernet1
+   description ### to_Leaf-1_eth1 ###
+   no switchport
+   ip address 10.1.5.1/30
+!
+interface Ethernet2
+   description ### to_Leaf-2_eth1 ###
+   no switchport
+   ip address 10.1.5.5/30
+!
+interface Ethernet3
+   description ### to_Leaf-3_eth1 ###
+   no switchport
+   ip address 10.1.5.9/30
+!
+interface Loopback0
+   ip address 10.1.0.1/32
+!
+```
