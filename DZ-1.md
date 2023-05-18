@@ -75,7 +75,7 @@ interface Loopback0
 hostname Spine-2
 !
 interface Ethernet1
-   description ### to_Leaf-1_eth1 ###
+   description ### to_Leaf-1_eth2 ###
    no switchport
    ip address 10.1.5.13/30
 !
