@@ -35,13 +35,14 @@ Leaf-3|10.1.1.3/32|10.1.5.10/30|10.1.5.22/30|N/A|
 #### 3. Настройки ####
 
 Лабораторный стенд развернут на ПО:
->Arista vEOS
->System MAC address:  5000.00d7.ee0b
->Software image version: 4.20.1F
->Architecture:           i386
->Internal build version: 4.20.1F-6820520.4201F
->Internal build ID:      790a11e8-5aaf-4be7-a11a-e61795d05b91
-
+```
+Arista vEOS
+System MAC address:  5000.00d7.ee0b
+Software image version: 4.20.1F
+Architecture:           i386
+Internal build version: 4.20.1F-6820520.4201F
+Internal build ID:      790a11e8-5aaf-4be7-a11a-e61795d05b91
+```
 ##### Spine-1 #####
 
 >!
