@@ -18,3 +18,52 @@ Spine-2|10.1.0.2/32|10.1.5.6/31|10.1.5.8/31|10.1.5.10/31|
 Leaf-1|10.1.1.1/32|10.1.5.1/31|10.1.5.7/31|N/A|
 Leaf-2|10.1.1.2/32|10.1.5.3/31|10.1.5.9/31|N/A|
 Leaf-3|10.1.1.3/32|10.1.5.5/31|10.1.5.11/31|N/A|
+
+#### 3. Настройки
+
+##### Spine-1
+```
+!
+hostname Spine-1
+!
+interface Ethernet1
+   description ### to_Leaf-1_eth1 ###
+   no switchport
+   ip address 10.1.5.0/31
+   ip ospf bfd
+   ip ospf network point-to-point
+   ip ospf authentication
+   ip ospf authentication-key 7 7O4CGaiAcR0=
+   ip ospf area 0.0.0.0
+!
+interface Ethernet2
+   description ### to_Leaf-2_eth1 ###
+   no switchport
+   ip address 10.1.5.2/31
+   ip ospf bfd
+   ip ospf network point-to-point
+   ip ospf authentication
+   ip ospf authentication-key 7 x1W70kMMQaQ=
+   ip ospf area 0.0.0.0
+!
+interface Ethernet3
+   description ### to_Leaf-3_eth1 ###
+   no switchport
+   ip address 10.1.5.4/31
+   ip ospf bfd
+   ip ospf network point-to-point
+   ip ospf authentication
+   ip ospf authentication-key 7 x1W70kMMQaQ=
+   ip ospf area 0.0.0.0
+!
+interface Loopback0
+   ip address 10.1.0.1/32
+!
+ip routing
+!
+router ospf 1
+   router-id 10.1.0.1
+   network 10.1.0.1/32 area 0.0.0.0
+   max-lsa 12000
+!
+```
