@@ -186,4 +186,39 @@ router ospf 1
    max-lsa 12000
 !
 ```
-
+##### Leaf-3
+```
+!
+hostname Leaf-3
+!
+interface Ethernet1
+   description ### to_Spine-1_eth3 ###
+   no switchport
+   ip address 10.1.5.5/31
+   ip ospf bfd
+   ip ospf network point-to-point
+   ip ospf authentication
+   ip ospf authentication-key 7 7O4CGaiAcR0=
+   ip ospf area 0.0.0.0
+!
+interface Ethernet2
+   description ### to_Spine-2_eth3 ###
+   no switchport
+   ip address 10.1.5.11/31
+   ip ospf bfd
+   ip ospf network point-to-point
+   ip ospf authentication
+   ip ospf authentication-key 7 x1W70kMMQaQ=
+   ip ospf area 0.0.0.0
+!
+interface Loopback0
+   ip address 10.1.1.3/32
+!
+ip routing
+!
+router ospf 1
+   router-id 10.1.1.3
+   network 10.1.1.3/32 area 0.0.0.0
+   max-lsa 12000
+!
+```
