@@ -285,6 +285,7 @@ Neighbor ID     VRF      Pri State                  Dead Time   Address         
 10.1.1.2        default  0   FULL                   00:00:33    10.1.5.9        Ethernet2
 10.1.1.3        default  0   FULL                   00:00:30    10.1.5.11       Ethernet3
 ```
+```
 Spine-2#show ip route
 
 VRF: default
@@ -313,6 +314,7 @@ Gateway of last resort is not set
  C      10.1.5.8/31 is directly connected, Ethernet2
  C      10.1.5.10/31 is directly connected, Ethernet3
 ```
+```
 Spine-2#show bfd neighbors
 VRF name: default
 -----------------
@@ -327,7 +329,6 @@ DstAddr       MyDisc   YourDisc     Interface   Type          LastUp  LastDown
    No Diagnostic       Up
    No Diagnostic       Up
    No Diagnostic       Up
-
 ```
 ##### Leaf-1
 ```
