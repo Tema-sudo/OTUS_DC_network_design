@@ -279,6 +279,55 @@ DstAddr      MyDisc   YourDisc     Interface    Type          LastUp  LastDown
 ```
 ##### Spine-2
 ```
+Spine-2#show ip ospf neighbor
+Neighbor ID     VRF      Pri State                  Dead Time   Address         Interface
+10.1.1.1        default  0   FULL                   00:00:38    10.1.5.7        Ethernet1
+10.1.1.2        default  0   FULL                   00:00:33    10.1.5.9        Ethernet2
+10.1.1.3        default  0   FULL                   00:00:30    10.1.5.11       Ethernet3
+```
+Spine-2#show ip route
+
+VRF: default
+Codes: C - connected, S - static, K - kernel,
+       O - OSPF, IA - OSPF inter area, E1 - OSPF external type 1,
+       E2 - OSPF external type 2, N1 - OSPF NSSA external type 1,
+       N2 - OSPF NSSA external type2, B I - iBGP, B E - eBGP,
+       R - RIP, I L1 - IS-IS level 1, I L2 - IS-IS level 2,
+       O3 - OSPFv3, A B - BGP Aggregate, A O - OSPF Summary,
+       NG - Nexthop Group Static Route, V - VXLAN Control Service,
+       DH - Dhcp client installed default route
+
+Gateway of last resort is not set
+
+ O      10.1.0.1/32 [110/30] via 10.1.5.7, Ethernet1
+                             via 10.1.5.9, Ethernet2
+                             via 10.1.5.11, Ethernet3
+ C      10.1.0.2/32 is directly connected, Loopback0
+ O      10.1.1.1/32 [110/20] via 10.1.5.7, Ethernet1
+ O      10.1.1.2/32 [110/20] via 10.1.5.9, Ethernet2
+ O      10.1.1.3/32 [110/20] via 10.1.5.11, Ethernet3
+ O      10.1.5.0/31 [110/20] via 10.1.5.7, Ethernet1
+ O      10.1.5.2/31 [110/20] via 10.1.5.9, Ethernet2
+ O      10.1.5.4/31 [110/20] via 10.1.5.11, Ethernet3
+ C      10.1.5.6/31 is directly connected, Ethernet1
+ C      10.1.5.8/31 is directly connected, Ethernet2
+ C      10.1.5.10/31 is directly connected, Ethernet3
+```
+Spine-2#show bfd neighbors
+VRF name: default
+-----------------
+DstAddr       MyDisc   YourDisc     Interface   Type          LastUp  LastDown
+--------- ---------- ---------- ------------- ------- --------------- ---------
+10.1.5.7  1549078110 1804904721 Ethernet1(12) normal  05/26/23 10:53        NA
+10.1.5.9  1054505106 3500007661 Ethernet2(13) normal  05/26/23 10:54        NA
+10.1.5.11 1378080671 3975481269 Ethernet3(14) normal  05/26/23 10:56        NA
+
+        LastDiag    State
+------------------- -----
+   No Diagnostic       Up
+   No Diagnostic       Up
+   No Diagnostic       Up
+
 ```
 ##### Leaf-1
 ```
