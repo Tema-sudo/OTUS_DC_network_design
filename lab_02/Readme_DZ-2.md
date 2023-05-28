@@ -5,4 +5,4 @@
 
 ### Решение.
 #### 1. Схема сети
-![dz2_network_scheme](dz2_network_scheme.png)
+![dz2_scheme_network](dz2_scheme_network.png)
