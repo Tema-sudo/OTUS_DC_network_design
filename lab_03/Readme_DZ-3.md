@@ -5,7 +5,7 @@
 
 ### Решение.
 #### 1. Схема сети
-![ddz-3_topo_isis_clos.pngk](dz-3_topo_isis_clos.png.png)
+![dz-3_topo_isis_clos.pngk](dz-3_topo_isis_clos.png.png)
 
 #### 2. Адресное пространство
 
