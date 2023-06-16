@@ -400,12 +400,83 @@ Spine-2#
 
 ##### Leaf-1
 ```
+Leaf-1#show isis neighbors
+
+Instance  VRF      System Id        Type Interface          SNPA              State Hold time   Circuit Id
+OTUS      default  Spine-1          L2   Ethernet1          P2P               UP    28          0F
+OTUS      default  Spine-2          L2   Ethernet2          P2P               UP    25          10
+Leaf-1#
 ```
 
 ```
+Leaf-1#show ip route isis
+
+VRF: default
+Codes: C - connected, S - static, K - kernel,
+       O - OSPF, IA - OSPF inter area, E1 - OSPF external type 1,
+       E2 - OSPF external type 2, N1 - OSPF NSSA external type 1,
+       N2 - OSPF NSSA external type2, B I - iBGP, B E - eBGP,
+       R - RIP, I L1 - IS-IS level 1, I L2 - IS-IS level 2,
+       O3 - OSPFv3, A B - BGP Aggregate, A O - OSPF Summary,
+       NG - Nexthop Group Static Route, V - VXLAN Control Service,
+       DH - Dhcp client installed default route
+
+ I L2   10.1.0.1/32 [115/20] via 10.1.5.0, Ethernet1
+ I L2   10.1.0.2/32 [115/20] via 10.1.5.6, Ethernet2
+ I L2   10.1.1.2/32 [115/30] via 10.1.5.0, Ethernet1
+                             via 10.1.5.6, Ethernet2
+ I L2   10.1.1.3/32 [115/30] via 10.1.5.0, Ethernet1
+                             via 10.1.5.6, Ethernet2
+ I L2   10.1.5.2/31 [115/20] via 10.1.5.0, Ethernet1
+ I L2   10.1.5.4/31 [115/20] via 10.1.5.0, Ethernet1
+ I L2   10.1.5.8/31 [115/20] via 10.1.5.6, Ethernet2
+ I L2   10.1.5.10/31 [115/20] via 10.1.5.6, Ethernet2
+
+Leaf-1#
 ```
 
 ```
+Leaf-1#show isis database
+
+IS-IS Instance: OTUS VRF: default
+  IS-IS Level 2 Link State Database
+    LSPID                 Seq Num   Cksum  Life  IS Flags
+    Spine-1.00-00         147       41255  713   L2 <>
+    Spine-2.00-00         152       17240  1179  L2 <>
+    Leaf-1.00-00          142       46126  626   L2 <>
+    Leaf-2.00-00          142       29029  926   L2 <>
+    Leaf-3.00-00          142       9127   1075  L2 <>
+```
+
+```
+Leaf-1#show isis database level-2
+
+IS-IS Instance: OTUS VRF: default
+  IS-IS Level 2 Link State Database
+    LSPID                 Seq Num   Cksum  Life  IS Flags
+    Spine-1.00-00         147       41255  708   L2 <>
+    Spine-2.00-00         152       17240  1174  L2 <>
+    Leaf-1.00-00          142       46126  621   L2 <>
+    Leaf-2.00-00          142       29029  921   L2 <>
+    Leaf-3.00-00          142       9127   1070  L2 <>
+Leaf-1#
+```
+
+```
+Leaf-1#show bfd neighbors
+VRF name: default
+-----------------
+DstAddr      MyDisc   YourDisc     Interface    Type          LastUp  LastDown
+-------- ---------- ---------- -------------- ------- --------------- ---------
+10.1.5.0 2999435826 3342111683 Ethernet1(15)  normal  06/16/23 12:20        NA
+10.1.5.6  904798458 4168898474 Ethernet2(16)  normal  06/16/23 12:20        NA
+
+        LastDiag    State
+------------------- -----
+   No Diagnostic       Up
+   No Diagnostic       Up
+
+Leaf-1#
 ```
 
 ##### Leaf-2 
