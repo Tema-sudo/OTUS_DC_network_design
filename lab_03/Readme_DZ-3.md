@@ -116,4 +116,113 @@ router isis OTUS
       bfd all-interfaces
 !
 ```
-
+##### Leaf-1
+```
+!
+hostname Leaf-1
+!
+interface Ethernet1
+   description ### to_Spine-1_eth1 ###
+   no switchport
+   ip address 10.1.5.1/31
+   isis enable OTUS
+   isis network point-to-point
+   isis authentication mode text
+   isis authentication key 7 Y5rbfDnzn74=
+!
+interface Ethernet2
+   description ### to_Spine-2_eth1 ###
+   no switchport
+   ip address 10.1.5.7/31
+   isis enable OTUS
+   isis network point-to-point
+   isis authentication mode text
+   isis authentication key 7 Y5rbfDnzn74=
+!
+interface Loopback0
+   ip address 10.1.1.1/32
+   isis enable OTUS
+!
+ip routing
+!
+router isis OTUS
+   net 49.0011.0100.0100.1001.00
+   is-type level-2
+   !
+   address-family ipv4 unicast
+      bfd all-interfaces
+!
+```
+##### Leaf-2 
+```
+!
+hostname Leaf-2
+!
+interface Ethernet1
+   description ### to_Spine-1_eth2 ###
+   no switchport
+   ip address 10.1.5.3/31
+   isis enable OTUS
+   isis network point-to-point
+   isis authentication mode text
+   isis authentication key 7 Y5rbfDnzn74=
+!
+interface Ethernet2
+   description ### to_Spine-2_eth2 ###
+   no switchport
+   ip address 10.1.5.9/31
+   isis enable OTUS
+   isis network point-to-point
+   isis authentication mode text
+   isis authentication key 7 Y5rbfDnzn74=
+!
+interface Loopback0
+   ip address 10.1.1.2/32
+   isis enable OTUS
+!
+ip routing
+!
+router isis OTUS
+   net 49.0011.0100.0100.1002.00
+   is-type level-2
+   !
+   address-family ipv4 unicast
+      bfd all-interfaces
+!
+```
+##### Leaf-3
+```
+!
+hostname Leaf-3
+!
+interface Ethernet1
+   description ### to_Spine-1_eth3 ###
+   no switchport
+   ip address 10.1.5.5/31
+   ip ospf bfd
+   ip ospf network point-to-point
+   ip ospf authentication
+   ip ospf authentication-key 7 7O4CGaiAcR0=
+   ip ospf area 0.0.0.0
+!
+interface Ethernet2
+   description ### to_Spine-2_eth3 ###
+   no switchport
+   ip address 10.1.5.11/31
+   ip ospf bfd
+   ip ospf network point-to-point
+   ip ospf authentication
+   ip ospf authentication-key 7 x1W70kMMQaQ=
+   ip ospf area 0.0.0.0
+!
+interface Loopback0
+   ip address 10.1.1.3/32
+!
+ip routing
+!
+router ospf 1
+   router-id 10.1.1.3
+   network 10.1.1.3/32 area 0.0.0.0
+   max-lsa 12000
+!
+```
