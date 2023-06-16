@@ -5,13 +5,14 @@
 
 ### Решение.
 #### 1. Схема сети
-Для Underlay сети реализуем IS-IS Level 2 топологию
+
+Для Underlay сети реализуем IS-IS Level 2 топологию.
 
 ![dz-3_topo_isis_clos.png](dz-3_topo_isis_clos.png)
 
 #### 2. Адресное пространство
 
-Примечание: _для достижения целей домашней работы и рационального распределения адресного пространства принято решение перейти на /31 маску физических интерфейсов._ 
+Используем /31 маску для организации адресного простраснтва
 
 |Name|Loopback0|Eth-1|Eth-2|Eth-3|
 |---|---|---|---|---|
@@ -20,3 +21,99 @@ Spine-2|10.1.0.2/32|10.1.5.6/31|10.1.5.8/31|10.1.5.10/31|
 Leaf-1|10.1.1.1/32|10.1.5.1/31|10.1.5.7/31|N/A|
 Leaf-2|10.1.1.2/32|10.1.5.3/31|10.1.5.9/31|N/A|
 Leaf-3|10.1.1.3/32|10.1.5.5/31|10.1.5.11/31|N/A|
+
+#### 3. Настройки
+
+##### Spine-1
+```
+!
+hostname Spine-1
+!
+interface Ethernet1
+   description ### to_Leaf-1_eth1 ###
+   no switchport
+   ip address 10.1.5.0/31
+   isis enable OTUS
+   isis network point-to-point
+   isis authentication mode text
+   isis authentication key 7 Y5rbfDnzn74=
+!
+interface Ethernet2
+   description ### to_Leaf-2_eth1 ###
+   no switchport
+   ip address 10.1.5.2/31
+   isis enable OTUS
+   isis network point-to-point
+   isis authentication mode text
+   isis authentication key 7 Y5rbfDnzn74=
+!
+interface Ethernet3
+   description ### to_Leaf-3_eth1 ###
+   no switchport
+   ip address 10.1.5.4/31
+   isis enable OTUS
+   isis network point-to-point
+   isis authentication mode text
+   isis authentication key 7 Y5rbfDnzn74=
+!
+interface Loopback0
+   ip address 10.1.0.1/32
+   isis enable OTUS
+!
+ip routing
+!
+router isis OTUS
+   net 49.0011.0100.0100.0001.00
+   is-type level-2
+   !
+   address-family ipv4 unicast
+      bfd all-interfaces
+!
+```
+##### Spine-2
+```
+!
+hostname Spine-2
+!
+interface Ethernet1
+   description ### to_Leaf-1_eth2 ###
+   no switchport
+   ip address 10.1.5.6/31
+   isis enable OTUS
+   isis network point-to-point
+   isis authentication mode text
+   isis authentication key 7 Y5rbfDnzn74=
+!
+interface Ethernet2
+   description ### to_Leaf-2_eth2 ###
+   no switchport
+   ip address 10.1.5.8/31
+   isis enable OTUS
+   isis network point-to-point
+   isis authentication mode text
+   isis authentication key 7 Y5rbfDnzn74=
+!
+interface Ethernet3
+   description ### to_Leaf-3_eth2 ###
+   no switchport
+   ip address 10.1.5.10/31
+   isis enable OTUS
+   isis network point-to-point
+   isis authentication mode text
+   isis authentication key 7 Y5rbfDnzn74=
+!
+interface Loopback0
+   ip address 10.1.0.2/32
+   isis enable OTUS
+!
+ip routing
+!
+router isis OTUS
+   net 49.0011.0100.0100.0002.00
+   is-type level-2
+   !
+   address-family ipv4 unicast
+      bfd all-interfaces
+!
+```
+
