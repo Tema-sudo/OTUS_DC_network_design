@@ -5,6 +5,8 @@
 
 ### Решение.
 #### 1. Схема сети
+Для Underlay сети реализуем IS-IS Level 2 топологию
+
 ![dz-3_topo_isis_clos.png](dz-3_topo_isis_clos.png)
 
 #### 2. Адресное пространство
