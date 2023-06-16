@@ -640,6 +640,6 @@ DstAddr       MyDisc   YourDisc     Interface   Type          LastUp  LastDown
    No Diagnostic       Up
    No Diagnostic       Up
 
-Leaf-3#`
+Leaf-3#
 ```
 
