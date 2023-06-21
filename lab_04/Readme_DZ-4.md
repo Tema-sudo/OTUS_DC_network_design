@@ -178,4 +178,36 @@ router bgp 65002
 ```
 ##### Leaf-3
 ```
+!
+hostname Leaf-3
+!
+interface Ethernet1
+   description ### to_Spine-1_eth3 ###
+   no switchport
+   ip address 10.1.5.5/31
+   no ip ospf bfd
+!
+interface Ethernet2
+   description ### to_Spine-2_eth3 ###
+   no switchport
+   ip address 10.1.5.11/31
+   no ip ospf bfd
+!
+interface Loopback0
+   ip address 10.1.1.3/32
+!
+ip routing
+!
+router bgp 65003
+   router-id 10.1.1.3
+   maximum-paths 3
+   neighbor OTUS_SPINE peer-group
+   neighbor OTUS_SPINE remote-as 65000
+   neighbor OTUS_SPINE fall-over bfd
+   neighbor OTUS_SPINE password 7 kCt/R/lTQ8E=
+   neighbor OTUS_SPINE maximum-routes 12000
+   neighbor 10.1.5.4 peer-group OTUS_SPINE
+   neighbor 10.1.5.10 peer-group OTUS_SPINE
+   network 10.1.1.3/32
+!
 ```
