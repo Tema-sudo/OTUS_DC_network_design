@@ -6,7 +6,7 @@
 ### Решение.
 #### 1. Схема сети
 
-Для Underlay сети реализуем eBGP связность, выделив SPINE в одну AS и LEAF каждый в уникальную AS. 
+Для Underlay сети реализуем eBGP связность, выделив SPINE в одну AS и каждый LEAF в уникальную AS. 
 
 ![dz-4_topo_ebgp_underlay.png](dz-4_topo_ebgp_underlay.png)
 
