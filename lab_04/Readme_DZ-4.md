@@ -26,12 +26,120 @@ Leaf-3|10.1.1.3/32|10.1.5.5/31|10.1.5.11/31|N/A|
 
 ##### Spine-1
 ```
+!
+hostname Spine-1
+!
+interface Ethernet1
+   description ### to_Leaf-1_eth1 ###
+   no switchport
+   ip address 10.1.5.0/31
+   no ip ospf bfd
+!
+interface Ethernet2
+   description ### to_Leaf-2_eth1 ###
+   no switchport
+   ip address 10.1.5.2/31
+   no ip ospf bfd
+!
+interface Ethernet3
+   description ### to_Leaf-3_eth1 ###
+   no switchport
+   ip address 10.1.5.4/31
+   no ip ospf bfd
+!
+interface Loopback0
+   ip address 10.1.0.1/32
+!
+ip routing
+!
+peer-filter LAB_OTUS_COD
+   10 match as-range 65001-65003 result accept
+!
+router bgp 65000
+   router-id 10.1.0.1
+   maximum-paths 3
+   bgp listen range 10.1.0.0/16 peer-group OTUS_LEAF peer-filter LAB_OTUS_COD
+   neighbor OTUS_LEAF peer-group
+   neighbor OTUS_LEAF password 7 +/ddbal+Y1I=
+   neighbor OTUS_LEAF maximum-routes 12000
+   network 10.1.0.1/32
+!
 ```
 ##### Spine-2
 ```
+!
+hostname Spine-2
+!
+interface Ethernet1
+   description ### to_Leaf-1_eth2 ###
+   no switchport
+   ip address 10.1.5.6/31
+   no ip ospf bfd
+!
+interface Ethernet2
+   description ### to_Leaf-2_eth2 ###
+   no switchport
+   ip address 10.1.5.8/31
+   no ip ospf bfd
+!
+interface Ethernet3
+   description ### to_Leaf-3_eth2 ###
+   no switchport
+   ip address 10.1.5.10/31
+   no ip ospf bfd
+!
+interface Loopback0
+   ip address 10.1.0.2/32
+!
+ip routing
+!
+peer-filter LAB_OTUS_COD
+   10 match as-range 65001-65003 result accept
+!
+router bgp 65000
+   router-id 10.1.0.2
+   maximum-paths 3
+   bgp listen range 10.1.0.0/16 peer-group OTUS_LEAF peer-filter LAB_OTUS_COD
+   neighbor OTUS_LEAF peer-group
+   neighbor OTUS_LEAF password 7 +/ddbal+Y1I=
+   neighbor OTUS_LEAF maximum-routes 12000
+   network 10.1.0.2/32
+!
 ```
 ##### Leaf-1
 ```
+!
+hostname Leaf-1
+!
+interface Ethernet1
+   description ### to_Spine-1_eth1 ###
+   no switchport
+   ip address 10.1.5.1/31
+   no ip ospf bfd
+!
+interface Ethernet2
+   description ### to_Spine-2_eth1 ###
+   no switchport
+   ip address 10.1.5.7/31
+   no ip ospf bfd
+!
+interface Loopback0
+   ip address 10.1.1.1/32
+!
+ip routing
+!
+router bgp 65001
+   router-id 10.1.1.1
+   maximum-paths 3
+   neighbor OTUS_SPINE peer-group
+   neighbor OTUS_SPINE remote-as 65000
+   neighbor OTUS_SPINE fall-over bfd
+   neighbor OTUS_SPINE password 7 kCt/R/lTQ8E=
+   neighbor OTUS_SPINE maximum-routes 12000
+   neighbor 10.1.5.0 peer-group OTUS_SPINE
+   neighbor 10.1.5.6 peer-group OTUS_SPINE
+   network 10.1.1.1/32
+!
 ```
 ##### Leaf-2 
 ```
