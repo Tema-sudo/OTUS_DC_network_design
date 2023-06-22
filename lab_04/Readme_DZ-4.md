@@ -289,23 +289,79 @@ Gateway of last resort is not set
 Spine-1#
 ```
 
-```
-```
-
 ##### Spine-2
 ```
+Spine-2#show ip bgp summary
+BGP summary information for VRF default
+Router identifier 10.1.0.2, local AS number 65000
+Neighbor Status Codes: m - Under maintenance
+  Neighbor         V  AS           MsgRcvd   MsgSent  InQ OutQ  Up/Down State  PfxRcd PfxAcc
+  10.1.5.7         4  65001           1754      1754    0    0    1d05h Estab  1      1
+  10.1.5.9         4  65002           1405      1402    0    0 23:15:51 Estab  1      1
+  10.1.5.11        4  65003           1404      1403    0    0 23:14:43 Estab  1      1
+Spine-2#
 ```
 
 ```
+Spine-2#show bfd neighbors
+VRF name: default
+-----------------
+DstAddr       MyDisc   YourDisc     Interface   Type          LastUp  LastDown
+--------- ---------- ---------- ------------- ------- --------------- ---------
+10.1.5.7  2966212945 3370647768 Ethernet1(15) normal  06/22/23 12:43        NA
+10.1.5.9  4233648242 1346450395 Ethernet2(16) normal  06/22/23 12:43        NA
+10.1.5.11  524916101 2606567882 Ethernet3(17) normal  06/22/23 12:43        NA
+
+        LastDiag    State
+------------------- -----
+   No Diagnostic       Up
+   No Diagnostic       Up
+   No Diagnostic       Up
+
+Spine-2#
 ```
 
 ```
+Spine-2#show ip bgp
+BGP routing table information for VRF default
+Router identifier 10.1.0.2, local AS number 65000
+Route status codes: s - suppressed, * - valid, > - active, # - not installed, E - ECMP head, e - ECMP
+                    S - Stale, c - Contributing to ECMP, b - backup, L - labeled-unicast
+Origin codes: i - IGP, e - EGP, ? - incomplete
+AS Path Attributes: Or-ID - Originator ID, C-LST - Cluster List, LL Nexthop - Link Local Nexthop
+
+        Network                Next Hop              Metric  LocPref Weight  Path
+ * >    10.1.0.2/32            -                     0       0       -       i
+ * >    10.1.1.1/32            10.1.5.7              0       100     0       65001 i
+ * >    10.1.1.2/32            10.1.5.9              0       100     0       65002 i
+ * >    10.1.1.3/32            10.1.5.11             0       100     0       65003 i
+Spine-2#
 ```
 
 ```
-```
+Spine-2#show ip route
 
-```
+VRF: default
+Codes: C - connected, S - static, K - kernel,
+       O - OSPF, IA - OSPF inter area, E1 - OSPF external type 1,
+       E2 - OSPF external type 2, N1 - OSPF NSSA external type 1,
+       N2 - OSPF NSSA external type2, B I - iBGP, B E - eBGP,
+       R - RIP, I L1 - IS-IS level 1, I L2 - IS-IS level 2,
+       O3 - OSPFv3, A B - BGP Aggregate, A O - OSPF Summary,
+       NG - Nexthop Group Static Route, V - VXLAN Control Service,
+       DH - Dhcp client installed default route
+
+Gateway of last resort is not set
+
+ C      10.1.0.2/32 is directly connected, Loopback0
+ B E    10.1.1.1/32 [200/0] via 10.1.5.7, Ethernet1
+ B E    10.1.1.2/32 [200/0] via 10.1.5.9, Ethernet2
+ B E    10.1.1.3/32 [200/0] via 10.1.5.11, Ethernet3
+ C      10.1.5.6/31 is directly connected, Ethernet1
+ C      10.1.5.8/31 is directly connected, Ethernet2
+ C      10.1.5.10/31 is directly connected, Ethernet3
+
+Spine-2#
 ```
 
 ##### Leaf-1
