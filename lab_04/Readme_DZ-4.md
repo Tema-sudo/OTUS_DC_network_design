@@ -60,6 +60,7 @@ router bgp 65000
    maximum-paths 3
    bgp listen range 10.1.0.0/16 peer-group OTUS_LEAF peer-filter LAB_OTUS_COD
    neighbor OTUS_LEAF peer-group
+   neighbor OTUS_LEAF fall-over bfd
    neighbor OTUS_LEAF password 7 +/ddbal+Y1I=
    neighbor OTUS_LEAF maximum-routes 12000
    network 10.1.0.1/32
@@ -101,6 +102,7 @@ router bgp 65000
    maximum-paths 3
    bgp listen range 10.1.0.0/16 peer-group OTUS_LEAF peer-filter LAB_OTUS_COD
    neighbor OTUS_LEAF peer-group
+   neighbor OTUS_LEAF fall-over bfd
    neighbor OTUS_LEAF password 7 +/ddbal+Y1I=
    neighbor OTUS_LEAF maximum-routes 12000
    network 10.1.0.2/32
