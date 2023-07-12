@@ -370,31 +370,65 @@ GATEWAY     : 192.168.1.254
 
 ##### Spine-01
 ```
+Spine-01#show bgp evpn summary
+BGP summary information for VRF default
+Router identifier 10.1.0.1, local AS number 65000
+Neighbor Status Codes: m - Under maintenance
+  Neighbor         V AS           MsgRcvd   MsgSent  InQ OutQ  Up/Down State   PfxRcd PfxAcc
+  10.1.1.1         4 65001            301       292    0    0 03:43:01 Estab   1      1
+  10.1.1.2         4 65002            286       286    0    0 03:42:26 Estab   1      1
+  10.1.1.3         4 65003            279       262    0    0 03:35:11 Estab   2      2
+```
 
+```
+Spine-01#show bgp evpn
+BGP routing table information for VRF default
+Router identifier 10.1.0.1, local AS number 65000
+Route status codes: s - suppressed, * - valid, > - active, E - ECMP head, e - ECMP
+                    S - Stale, c - Contributing to ECMP, b - backup
+                    % - Pending BGP convergence
+Origin codes: i - IGP, e - EGP, ? - incomplete
+AS Path Attributes: Or-ID - Originator ID, C-LST - Cluster List, LL Nexthop - Link Local Nexthop
+
+          Network                Next Hop              Metric  LocPref Weight  Path
+ * >     RD: 10.1.1.1:10010 imet 10.1.2.1
+                                 10.1.2.1              -       100     0       65001 i
+ * >     RD: 10.1.1.2:10020 imet 10.1.2.2
+                                 10.1.2.2              -       100     0       65002 i
+ * >     RD: 10.1.1.3:10010 imet 10.1.2.3
+                                 10.1.2.3              -       100     0       65003 i
+ * >     RD: 10.1.1.3:10020 imet 10.1.2.3
+                                 10.1.2.3              -       100     0       65003 i
 ```
 ##### Spine-02
 ```
+```
 
+```
 ```
 ##### Leaf-01
 ```
+```
 
+```
 ```
 ##### Leaf-02 
 ```
+```
 
+```
 ```
 ##### Leaf-03
 ```
+```
 
+```
 ```
 ##### Client-01
 ```
-
 ```
 ##### Client-02
 ```
-
 ```
 ##### Client-03
 ```
@@ -402,5 +436,4 @@ GATEWAY     : 192.168.1.254
 ```
 ##### Client-04
 ```
-
 ```
