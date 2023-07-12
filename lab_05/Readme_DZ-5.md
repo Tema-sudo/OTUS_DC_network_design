@@ -402,27 +402,145 @@ AS Path Attributes: Or-ID - Originator ID, C-LST - Cluster List, LL Nexthop - Li
 ```
 ##### Spine-02
 ```
+Spine-02#show bgp evpn summary
+BGP summary information for VRF default
+Router identifier 10.1.0.2, local AS number 65000
+Neighbor Status Codes: m - Under maintenance
+  Neighbor         V AS           MsgRcvd   MsgSent  InQ OutQ  Up/Down State   PfxRcd PfxAcc
+  10.1.1.1         4 65001            292       298    0    0 03:45:23 Estab   1      1
+  10.1.1.2         4 65002            288       290    0    0 03:45:11 Estab   1      1
+  10.1.1.3         4 65003            283       265    0    0 03:37:55 Estab   2      2
 ```
 
 ```
+Spine-02#show bgp evpn
+BGP routing table information for VRF default
+Router identifier 10.1.0.2, local AS number 65000
+Route status codes: s - suppressed, * - valid, > - active, E - ECMP head, e - ECMP
+                    S - Stale, c - Contributing to ECMP, b - backup
+                    % - Pending BGP convergence
+Origin codes: i - IGP, e - EGP, ? - incomplete
+AS Path Attributes: Or-ID - Originator ID, C-LST - Cluster List, LL Nexthop - Link Local Nexthop
+
+          Network                Next Hop              Metric  LocPref Weight  Path
+ * >     RD: 10.1.1.1:10010 imet 10.1.2.1
+                                 10.1.2.1              -       100     0       65001 i
+ * >     RD: 10.1.1.2:10020 imet 10.1.2.2
+                                 10.1.2.2              -       100     0       65002 i
+ * >     RD: 10.1.1.3:10010 imet 10.1.2.3
+                                 10.1.2.3              -       100     0       65003 i
+ * >     RD: 10.1.1.3:10020 imet 10.1.2.3
+                                 10.1.2.3              -       100     0       65003 i
 ```
 ##### Leaf-01
 ```
+Leaf-01#show bgp evpn summary
+BGP summary information for VRF default
+Router identifier 10.1.1.1, local AS number 65001
+Neighbor Status Codes: m - Under maintenance
+  Neighbor         V AS           MsgRcvd   MsgSent  InQ OutQ  Up/Down State   PfxRcd PfxAcc
+  10.1.0.1         4 65000            447       468    0    0 03:46:45 Estab   3      3
+  10.1.0.2         4 65000            418       408    0    0 03:46:22 Estab   3      3
 ```
 
 ```
+Leaf-01#show bgp evpn
+BGP routing table information for VRF default
+Router identifier 10.1.1.1, local AS number 65001
+Route status codes: s - suppressed, * - valid, > - active, E - ECMP head, e - ECMP
+                    S - Stale, c - Contributing to ECMP, b - backup
+                    % - Pending BGP convergence
+Origin codes: i - IGP, e - EGP, ? - incomplete
+AS Path Attributes: Or-ID - Originator ID, C-LST - Cluster List, LL Nexthop - Link Local Nexthop
+
+          Network                Next Hop              Metric  LocPref Weight  Path
+ * >     RD: 10.1.1.1:10010 imet 10.1.2.1
+                                 -                     -       -       0       i
+ * >Ec   RD: 10.1.1.2:10020 imet 10.1.2.2
+                                 10.1.2.2              -       100     0       65000 65002 i
+ *  ec   RD: 10.1.1.2:10020 imet 10.1.2.2
+                                 10.1.2.2              -       100     0       65000 65002 i
+ * >Ec   RD: 10.1.1.3:10010 imet 10.1.2.3
+                                 10.1.2.3              -       100     0       65000 65003 i
+ *  ec   RD: 10.1.1.3:10010 imet 10.1.2.3
+                                 10.1.2.3              -       100     0       65000 65003 i
+ * >Ec   RD: 10.1.1.3:10020 imet 10.1.2.3
+                                 10.1.2.3              -       100     0       65000 65003 i
+ *  ec   RD: 10.1.1.3:10020 imet 10.1.2.3
+                                 10.1.2.3              -       100     0       65000 65003 i
+Leaf-01#
 ```
 ##### Leaf-02 
 ```
+Leaf-02#show bgp evpn summary
+BGP summary information for VRF default
+Router identifier 10.1.1.2, local AS number 65002
+Neighbor Status Codes: m - Under maintenance
+  Neighbor         V AS           MsgRcvd   MsgSent  InQ OutQ  Up/Down State   PfxRcd PfxAcc
+  10.1.0.1         4 65000            398       410    0    0 03:50:16 Estab   3      3
+  10.1.0.2         4 65000            397       400    0    0 03:50:16 Estab   3      3
 ```
 
 ```
+Leaf-02#show bgp evpn
+BGP routing table information for VRF default
+Router identifier 10.1.1.2, local AS number 65002
+Route status codes: s - suppressed, * - valid, > - active, E - ECMP head, e - ECMP
+                    S - Stale, c - Contributing to ECMP, b - backup
+                    % - Pending BGP convergence
+Origin codes: i - IGP, e - EGP, ? - incomplete
+AS Path Attributes: Or-ID - Originator ID, C-LST - Cluster List, LL Nexthop - Link Local Nexthop
+
+          Network                Next Hop              Metric  LocPref Weight  Path
+ * >Ec   RD: 10.1.1.1:10010 imet 10.1.2.1
+                                 10.1.2.1              -       100     0       65000 65001 i
+ *  ec   RD: 10.1.1.1:10010 imet 10.1.2.1
+                                 10.1.2.1              -       100     0       65000 65001 i
+ * >     RD: 10.1.1.2:10020 imet 10.1.2.2
+                                 -                     -       -       0       i
+ * >Ec   RD: 10.1.1.3:10010 imet 10.1.2.3
+                                 10.1.2.3              -       100     0       65000 65003 i
+ *  ec   RD: 10.1.1.3:10010 imet 10.1.2.3
+                                 10.1.2.3              -       100     0       65000 65003 i
+ * >Ec   RD: 10.1.1.3:10020 imet 10.1.2.3
+                                 10.1.2.3              -       100     0       65000 65003 i
+ *  ec   RD: 10.1.1.3:10020 imet 10.1.2.3
+                                 10.1.2.3              -       100     0       65000 65003 i
 ```
 ##### Leaf-03
 ```
+Leaf-03#show bgp evpn summary
+BGP summary information for VRF default
+Router identifier 10.1.1.3, local AS number 65003
+Neighbor Status Codes: m - Under maintenance
+  Neighbor         V AS           MsgRcvd   MsgSent  InQ OutQ  Up/Down State   PfxRcd PfxAcc
+  10.1.0.1         4 65000            280       299    0    0 03:41:03 Estab   2      2
+  10.1.0.2         4 65000            280       300    0    0 03:41:03 Estab   2      2
 ```
 
 ```
+Leaf-03#show bgp evpn
+BGP routing table information for VRF default
+Router identifier 10.1.1.3, local AS number 65003
+Route status codes: s - suppressed, * - valid, > - active, E - ECMP head, e - ECMP
+                    S - Stale, c - Contributing to ECMP, b - backup
+                    % - Pending BGP convergence
+Origin codes: i - IGP, e - EGP, ? - incomplete
+AS Path Attributes: Or-ID - Originator ID, C-LST - Cluster List, LL Nexthop - Link Local Nexthop
+
+          Network                Next Hop              Metric  LocPref Weight  Path
+ * >Ec   RD: 10.1.1.1:10010 imet 10.1.2.1
+                                 10.1.2.1              -       100     0       65000 65001 i
+ *  ec   RD: 10.1.1.1:10010 imet 10.1.2.1
+                                 10.1.2.1              -       100     0       65000 65001 i
+ * >Ec   RD: 10.1.1.2:10020 imet 10.1.2.2
+                                 10.1.2.2              -       100     0       65000 65002 i
+ *  ec   RD: 10.1.1.2:10020 imet 10.1.2.2
+                                 10.1.2.2              -       100     0       65000 65002 i
+ * >     RD: 10.1.1.3:10010 imet 10.1.2.3
+                                 -                     -       -       0       i
+ * >     RD: 10.1.1.3:10020 imet 10.1.2.3
+                                 -                     -       -       0       i
 ```
 ##### Client-01
 ```
