@@ -588,6 +588,221 @@ VPCS> ping 192.168.1.1
 84 bytes from 192.168.1.1 icmp_seq=5 ttl=64 time=21.733 ms
 ```
 
+Фиксируем данные на коммутаторах   
+##### Spine-01
+```
+Spine-01#show bgp evpn route-type mac-ip
+BGP routing table information for VRF default
+Router identifier 10.1.0.1, local AS number 65000
+Route status codes: s - suppressed, * - valid, > - active, E - ECMP head, e - ECMP
+                    S - Stale, c - Contributing to ECMP, b - backup
+                    % - Pending BGP convergence
+Origin codes: i - IGP, e - EGP, ? - incomplete
+AS Path Attributes: Or-ID - Originator ID, C-LST - Cluster List, LL Nexthop - Link Local Nexthop
+
+          Network                Next Hop              Metric  LocPref Weight  Path
+ * >     RD: 10.1.1.1:10010 mac-ip 0050.7966.680f
+                                 10.1.2.1              -       100     0       65001 i
+ * >     RD: 10.1.1.2:10020 mac-ip 0050.7966.6810
+                                 10.1.2.2              -       100     0       65002 i
+ * >     RD: 10.1.1.3:10010 mac-ip 0050.7966.6811
+                                 10.1.2.3              -       100     0       65003 i
+ * >     RD: 10.1.1.3:10020 mac-ip 0050.7966.6812
+                                 10.1.2.3              -       100     0       65003 i
+```
+##### Spine-02
+```
+Spine-02#show bgp evpn route-type mac-ip
+BGP routing table information for VRF default
+Router identifier 10.1.0.2, local AS number 65000
+Route status codes: s - suppressed, * - valid, > - active, E - ECMP head, e - ECMP
+                    S - Stale, c - Contributing to ECMP, b - backup
+                    % - Pending BGP convergence
+Origin codes: i - IGP, e - EGP, ? - incomplete
+AS Path Attributes: Or-ID - Originator ID, C-LST - Cluster List, LL Nexthop - Link Local Nexthop
+
+          Network                Next Hop              Metric  LocPref Weight  Path
+ * >     RD: 10.1.1.1:10010 mac-ip 0050.7966.680f
+                                 10.1.2.1              -       100     0       65001 i
+ * >     RD: 10.1.1.2:10020 mac-ip 0050.7966.6810
+                                 10.1.2.2              -       100     0       65002 i
+ * >     RD: 10.1.1.3:10010 mac-ip 0050.7966.6811
+                                 10.1.2.3              -       100     0       65003 i
+ * >     RD: 10.1.1.3:10020 mac-ip 0050.7966.6812
+                                 10.1.2.3              -       100     0       65003 i
+
+```
+##### Leaf-01
+```
+Leaf-01#show bgp evpn route-type mac-ip
+BGP routing table information for VRF default
+Router identifier 10.1.1.1, local AS number 65001
+Route status codes: s - suppressed, * - valid, > - active, E - ECMP head, e - ECMP
+                    S - Stale, c - Contributing to ECMP, b - backup
+                    % - Pending BGP convergence
+Origin codes: i - IGP, e - EGP, ? - incomplete
+AS Path Attributes: Or-ID - Originator ID, C-LST - Cluster List, LL Nexthop - Link Local Nexthop
+
+          Network                Next Hop              Metric  LocPref Weight  Path
+ * >     RD: 10.1.1.1:10010 mac-ip 0050.7966.680f
+                                 -                     -       -       0       i
+ * >Ec   RD: 10.1.1.2:10020 mac-ip 0050.7966.6810
+                                 10.1.2.2              -       100     0       65000 65002 i
+ *  ec   RD: 10.1.1.2:10020 mac-ip 0050.7966.6810
+                                 10.1.2.2              -       100     0       65000 65002 i
+ * >Ec   RD: 10.1.1.3:10010 mac-ip 0050.7966.6811
+                                 10.1.2.3              -       100     0       65000 65003 i
+ *  ec   RD: 10.1.1.3:10010 mac-ip 0050.7966.6811
+                                 10.1.2.3              -       100     0       65000 65003 i
+ * >Ec   RD: 10.1.1.3:10020 mac-ip 0050.7966.6812
+                                 10.1.2.3              -       100     0       65000 65003 i
+ *  ec   RD: 10.1.1.3:10020 mac-ip 0050.7966.6812
+                                 10.1.2.3              -       100     0       65000 65003 i
+```
+
+```
+Leaf-01#show vxlan address-table
+          Vxlan Mac Address Table
+----------------------------------------------------------------------
+
+VLAN  Mac Address     Type      Prt  VTEP             Moves   Last Move
+----  -----------     ----      ---  ----             -----   ---------
+  10  0050.7966.6811  EVPN      Vx1  10.1.2.3         1       0:03:36 ago
+Total Remote Mac Addresses for this criterion: 1
+```
+
+```
+Leaf-01#show mac address-table
+          Mac Address Table
+------------------------------------------------------------------
+
+Vlan    Mac Address       Type        Ports      Moves   Last Move
+----    -----------       ----        -----      -----   ---------
+  10    0050.7966.680f    DYNAMIC     Et3        1       0:03:44 ago
+  10    0050.7966.6811    DYNAMIC     Vx1        1       0:03:43 ago
+Total Mac Addresses for this criterion: 2
+
+          Multicast Mac Address Table
+------------------------------------------------------------------
+
+Vlan    Mac Address       Type        Ports
+----    -----------       ----        -----
+Total Mac Addresses for this criterion: 0
+```
+##### Leaf-02 
+```
+Leaf-02#show bgp evpn route-type mac-ip
+BGP routing table information for VRF default
+Router identifier 10.1.1.2, local AS number 65002
+Route status codes: s - suppressed, * - valid, > - active, E - ECMP head, e - ECMP
+                    S - Stale, c - Contributing to ECMP, b - backup
+                    % - Pending BGP convergence
+Origin codes: i - IGP, e - EGP, ? - incomplete
+AS Path Attributes: Or-ID - Originator ID, C-LST - Cluster List, LL Nexthop - Link Local Nexthop
+
+          Network                Next Hop              Metric  LocPref Weight  Path
+ * >Ec   RD: 10.1.1.1:10010 mac-ip 0050.7966.680f
+                                 10.1.2.1              -       100     0       65000 65001 i
+ *  ec   RD: 10.1.1.1:10010 mac-ip 0050.7966.680f
+                                 10.1.2.1              -       100     0       65000 65001 i
+ * >     RD: 10.1.1.2:10020 mac-ip 0050.7966.6810
+                                 -                     -       -       0       i
+ * >Ec   RD: 10.1.1.3:10010 mac-ip 0050.7966.6811
+                                 10.1.2.3              -       100     0       65000 65003 i
+ *  ec   RD: 10.1.1.3:10010 mac-ip 0050.7966.6811
+                                 10.1.2.3              -       100     0       65000 65003 i
+ * >Ec   RD: 10.1.1.3:10020 mac-ip 0050.7966.6812
+                                 10.1.2.3              -       100     0       65000 65003 i
+ *  ec   RD: 10.1.1.3:10020 mac-ip 0050.7966.6812
+                                 10.1.2.3              -       100     0       65000 65003 i
+```
+
+```
+Leaf-02#show vxlan address-table
+          Vxlan Mac Address Table
+----------------------------------------------------------------------
+
+VLAN  Mac Address     Type      Prt  VTEP             Moves   Last Move
+----  -----------     ----      ---  ----             -----   ---------
+  20  0050.7966.6812  EVPN      Vx1  10.1.2.3         1       0:04:03 ago
+Total Remote Mac Addresses for this criterion: 1
+```
+
+```
+Leaf-02#show mac address-table
+          Mac Address Table
+------------------------------------------------------------------
+
+Vlan    Mac Address       Type        Ports      Moves   Last Move
+----    -----------       ----        -----      -----   ---------
+  20    0050.7966.6810    DYNAMIC     Et3        1       0:04:09 ago
+  20    0050.7966.6812    DYNAMIC     Vx1        1       0:04:09 ago
+Total Mac Addresses for this criterion: 2
+
+          Multicast Mac Address Table
+------------------------------------------------------------------
+
+Vlan    Mac Address       Type        Ports
+----    -----------       ----        -----
+Total Mac Addresses for this criterion: 0
+```
+##### Leaf-03
+```
+Leaf-03#show bgp evpn route-type mac-ip
+BGP routing table information for VRF default
+Router identifier 10.1.1.3, local AS number 65003
+Route status codes: s - suppressed, * - valid, > - active, E - ECMP head, e - ECMP
+                    S - Stale, c - Contributing to ECMP, b - backup
+                    % - Pending BGP convergence
+Origin codes: i - IGP, e - EGP, ? - incomplete
+AS Path Attributes: Or-ID - Originator ID, C-LST - Cluster List, LL Nexthop - Link Local Nexthop
+
+          Network                Next Hop              Metric  LocPref Weight  Path
+ * >Ec   RD: 10.1.1.1:10010 mac-ip 0050.7966.680f
+                                 10.1.2.1              -       100     0       65000 65001 i
+ *  ec   RD: 10.1.1.1:10010 mac-ip 0050.7966.680f
+                                 10.1.2.1              -       100     0       65000 65001 i
+ * >Ec   RD: 10.1.1.2:10020 mac-ip 0050.7966.6810
+                                 10.1.2.2              -       100     0       65000 65002 i
+ *  ec   RD: 10.1.1.2:10020 mac-ip 0050.7966.6810
+                                 10.1.2.2              -       100     0       65000 65002 i
+ * >     RD: 10.1.1.3:10010 mac-ip 0050.7966.6811
+                                 -                     -       -       0       i
+ * >     RD: 10.1.1.3:10020 mac-ip 0050.7966.6812
+                                 -                     -       -       0       i
+```
+```
+Leaf-03#show vxlan address-table
+          Vxlan Mac Address Table
+----------------------------------------------------------------------
+
+VLAN  Mac Address     Type      Prt  VTEP             Moves   Last Move
+----  -----------     ----      ---  ----             -----   ---------
+  10  0050.7966.680f  EVPN      Vx1  10.1.2.1         1       0:04:42 ago
+  20  0050.7966.6810  EVPN      Vx1  10.1.2.2         1       0:04:37 ago
+Total Remote Mac Addresses for this criterion: 2
+```
+
+```
+Leaf-03#show mac address-table
+          Mac Address Table
+------------------------------------------------------------------
+
+Vlan    Mac Address       Type        Ports      Moves   Last Move
+----    -----------       ----        -----      -----   ---------
+  10    0050.7966.680f    DYNAMIC     Vx1        1       0:04:50 ago
+  10    0050.7966.6811    DYNAMIC     Et3        1       0:04:50 ago
+  20    0050.7966.6810    DYNAMIC     Vx1        1       0:04:45 ago
+  20    0050.7966.6812    DYNAMIC     Et4        1       0:04:45 ago
+Total Mac Addresses for this criterion: 4
+
+          Multicast Mac Address Table
+------------------------------------------------------------------
+
+Vlan    Mac Address       Type        Ports
+----    -----------       ----        -----
+Total Mac Addresses for this criterion: 0
+```
 
 
 
