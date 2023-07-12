@@ -368,6 +368,8 @@ GATEWAY     : 192.168.1.254
 
 #### 4. Демонстрация работы VxLAN EVPN L2. 
 
+Проверим соседство и наличие маршрутов типа 3 в BGP EVPN address family. 
+
 ##### Spine-01
 ```
 Spine-01#show bgp evpn summary
@@ -542,6 +544,9 @@ AS Path Attributes: Or-ID - Originator ID, C-LST - Cluster List, LL Nexthop - Li
  * >     RD: 10.1.1.3:10020 imet 10.1.2.3
                                  -                     -       -       0       i
 ```
+
+Проверяем сетевое взаимодействие клиентских устройств
+
 ##### Client-01
 ```
 VPCS> ping 192.168.0.2
