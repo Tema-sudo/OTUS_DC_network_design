@@ -198,21 +198,174 @@ router bgp 65001
 ```
 ##### Leaf-02 
 ```
-
+!
+service routing protocols model multi-agent
+!
+hostname Leaf-02
+!
+vlan 20
+   name ###Service-2###
+!
+interface Ethernet1
+   description ### to_Spine-1_eth2 ###
+   no switchport
+   ip address 10.1.5.3/31
+!
+interface Ethernet2
+   description ### to_Spine-2_eth2 ###
+   no switchport
+   ip address 10.1.5.9/31
+!
+interface Ethernet3
+   switchport access vlan 20
+!
+interface Loopback0
+   ip address 10.1.1.2/32
+!
+interface Loopback1
+   ip address 10.1.2.2/32
+!
+interface Vxlan1
+   vxlan source-interface Loopback1
+   vxlan udp-port 4789
+   vxlan vlan 20 vni 10020
+!
+ip routing
+!
+ip prefix-list LOOPBACKS seq 10 permit 10.1.0.0/22 le 32
+!
+route-map LOOPBACKS permit 10
+   match ip address prefix-list LOOPBACKS
+!
+router bgp 65002
+   router-id 10.1.1.2
+   neighbor SPINE_OVERLAY peer group
+   neighbor SPINE_OVERLAY remote-as 65000
+   neighbor SPINE_OVERLAY update-source Loopback0
+   neighbor SPINE_OVERLAY ebgp-multihop 2
+   neighbor SPINE_OVERLAY send-community
+   neighbor SPINE_UNDERLAY peer group
+   neighbor SPINE_UNDERLAY remote-as 65000
+   neighbor 10.1.0.1 peer group SPINE_OVERLAY
+   neighbor 10.1.0.2 peer group SPINE_OVERLAY
+   neighbor 10.1.5.2 peer group SPINE_UNDERLAY
+   neighbor 10.1.5.8 peer group SPINE_UNDERLAY
+   redistribute connected route-map LOOPBACKS
+   !
+   vlan 20
+      rd 10.1.1.2:10020
+      route-target both 1:10020
+      redistribute learned
+   !
+   address-family evpn
+      neighbor SPINE_OVERLAY activate
+   !
+   address-family ipv4
+      no neighbor SPINE_OVERLAY activate
+!
 ```
 ##### Leaf-03
 ```
-
+!
+service routing protocols model multi-agent
+!
+hostname Leaf-03
+!
+vlan 10
+   name ###Service-1###
+!
+vlan 20
+   name ###Service-2###
+!
+interface Ethernet1
+   description ### to_Spine-1_eth3 ###
+   no switchport
+   ip address 10.1.5.5/31
+!
+interface Ethernet2
+   description ### to_Spine-2_eth3 ###
+   no switchport
+   ip address 10.1.5.11/31
+!
+interface Ethernet3
+   switchport access vlan 10
+!
+interface Ethernet4
+   switchport access vlan 20
+!
+interface Loopback0
+   ip address 10.1.1.3/32
+!
+interface Loopback1
+   ip address 10.1.2.3/32
+!
+interface Vxlan1
+   vxlan source-interface Loopback1
+   vxlan udp-port 4789
+   vxlan vlan 10-20 vni 10010-10020
+!
+ip prefix-list LOOPBACKS seq 10 permit 10.1.0.0/22 le 32
+!
+route-map LOOPBACKS permit 10
+   match ip address prefix-list LOOPBACKS
+!
+router bgp 65003
+   router-id 10.1.1.3
+   neighbor SPINE_OVERLAY peer group
+   neighbor SPINE_OVERLAY remote-as 65000
+   neighbor SPINE_OVERLAY update-source Loopback0
+   neighbor SPINE_OVERLAY ebgp-multihop 2
+   neighbor SPINE_OVERLAY send-community
+   neighbor SPINE_UNDERLAY peer group
+   neighbor SPINE_UNDERLAY remote-as 65000
+   neighbor 10.1.0.1 peer group SPINE_OVERLAY
+   neighbor 10.1.0.2 peer group SPINE_OVERLAY
+   neighbor 10.1.5.4 peer group SPINE_UNDERLAY
+   neighbor 10.1.5.10 peer group SPINE_UNDERLAY
+   redistribute connected route-map LOOPBACKS
+   !
+   vlan 10
+      rd 10.1.1.3:10010
+      route-target both 1:10010
+      redistribute learned
+   !
+   vlan 20
+      rd 10.1.1.3:10020
+      route-target both 1:10020
+      redistribute learned
+   !
+   address-family evpn
+      neighbor SPINE_OVERLAY activate
+   !
+   address-family ipv4
+      no neighbor SPINE_OVERLAY activate
+!
 ```
 ##### Client-01
 ```
-
+NAME        : VPCS[1]
+IP/MASK     : 192.168.0.1/24
+GATEWAY     : 192.168.0.254
 ```
 ##### Client-02
 ```
+NAME        : VPCS[1]
+IP/MASK     : 192.168.1.1/24
+GATEWAY     : 192.168.1.254
+DNS         :
 
 ```
 ##### Client-03
 ```
-
+NAME        : VPCS[1]
+IP/MASK     : 192.168.0.2/24
+GATEWAY     : 192.168.0.254
 ```
+##### Client-04
+```
+NAME        : VPCS[1]
+IP/MASK     : 192.168.1.2/24
+GATEWAY     : 192.168.1.254
+```
+
+#### 4. Демонстрация работы VxLAN EVPN L2. 
