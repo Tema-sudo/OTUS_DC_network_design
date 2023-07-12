@@ -544,14 +544,49 @@ AS Path Attributes: Or-ID - Originator ID, C-LST - Cluster List, LL Nexthop - Li
 ```
 ##### Client-01
 ```
+VPCS> ping 192.168.0.2
+
+84 bytes from 192.168.0.2 icmp_seq=1 ttl=64 time=65.078 ms
+84 bytes from 192.168.0.2 icmp_seq=2 ttl=64 time=35.620 ms
+84 bytes from 192.168.0.2 icmp_seq=3 ttl=64 time=27.847 ms
+84 bytes from 192.168.0.2 icmp_seq=4 ttl=64 time=41.399 ms
+84 bytes from 192.168.0.2 icmp_seq=5 ttl=64 time=23.467 ms
 ```
 ##### Client-02
 ```
+VPCS> ping 192.168.1.2
+
+84 bytes from 192.168.1.2 icmp_seq=1 ttl=64 time=79.145 ms
+84 bytes from 192.168.1.2 icmp_seq=2 ttl=64 time=34.785 ms
+84 bytes from 192.168.1.2 icmp_seq=3 ttl=64 time=30.982 ms
+84 bytes from 192.168.1.2 icmp_seq=4 ttl=64 time=33.897 ms
+84 bytes from 192.168.1.2 icmp_seq=5 ttl=64 time=24.670 ms
 ```
 ##### Client-03
 ```
+VPCS> ping 192.168.0.1
 
+84 bytes from 192.168.0.1 icmp_seq=1 ttl=64 time=48.626 ms
+84 bytes from 192.168.0.1 icmp_seq=2 ttl=64 time=46.194 ms
+84 bytes from 192.168.0.1 icmp_seq=3 ttl=64 time=23.423 ms
+84 bytes from 192.168.0.1 icmp_seq=4 ttl=64 time=22.681 ms
+84 bytes from 192.168.0.1 icmp_seq=5 ttl=64 time=48.249 ms
 ```
 ##### Client-04
 ```
+VPCS> ping 192.168.1.1
+
+84 bytes from 192.168.1.1 icmp_seq=1 ttl=64 time=42.132 ms
+84 bytes from 192.168.1.1 icmp_seq=2 ttl=64 time=27.224 ms
+84 bytes from 192.168.1.1 icmp_seq=3 ttl=64 time=32.065 ms
+84 bytes from 192.168.1.1 icmp_seq=4 ttl=64 time=22.093 ms
+84 bytes from 192.168.1.1 icmp_seq=5 ttl=64 time=21.733 ms
 ```
+
+
+
+
+
+
+
+
