@@ -76,7 +76,56 @@ router bgp 65000
 ```
 ##### Spine-02
 ```
-
+!
+service routing protocols model multi-agent
+!
+hostname Spine-02
+!
+interface Ethernet1
+   description ### to_Leaf-1_eth2 ###
+   no switchport
+   ip address 10.1.5.6/31
+!
+interface Ethernet2
+   description ### to_Leaf-2_eth2 ###
+   no switchport
+   ip address 10.1.5.8/31
+!
+interface Ethernet3
+   description ### to_Leaf-3_eth2 ###
+   no switchport
+   ip address 10.1.5.10/31
+!
+interface Loopback0
+   ip address 10.1.0.2/32
+!
+ip routing
+!
+ip prefix-list LOOPBACKS seq 10 permit 10.1.0.0/23 le 32
+!
+route-map LOOPBACKS permit 10
+   match ip address prefix-list LOOPBACKS
+!
+peer-filter LEAF_AS
+   10 match as-range 65001-65003 result accept
+!
+router bgp 65000
+   router-id 10.1.0.2
+   bgp listen range 10.1.1.0/24 peer-group LEAF_OVERLAY peer-filter LEAF_AS
+   bgp listen range 10.1.5.0/24 peer-group LEAF_UNDERLAY peer-filter LEAF_AS
+   neighbor LEAF_OVERLAY peer group
+   neighbor LEAF_OVERLAY update-source Loopback0
+   neighbor LEAF_OVERLAY ebgp-multihop 2
+   neighbor LEAF_OVERLAY send-community
+   neighbor LEAF_UNDERLAY peer group
+   redistribute connected route-map LOOPBACKS
+   !
+   address-family evpn
+      neighbor LEAF_OVERLAY activate
+   !
+   address-family ipv4
+      no neighbor LEAF_OVERLAY activate
+!
 ```
 ##### Leaf-01
 ```
