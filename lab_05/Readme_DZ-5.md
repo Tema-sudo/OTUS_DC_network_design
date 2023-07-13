@@ -97,8 +97,6 @@ interface Ethernet3
 interface Loopback0
    ip address 10.1.0.2/32
 !
-ip routing
-!
 ip prefix-list LOOPBACKS seq 10 permit 10.1.0.0/23 le 32
 !
 route-map LOOPBACKS permit 10
@@ -227,8 +225,6 @@ interface Vxlan1
    vxlan source-interface Loopback1
    vxlan udp-port 4789
    vxlan vlan 20 vni 10020
-!
-ip routing
 !
 ip prefix-list LOOPBACKS seq 10 permit 10.1.0.0/22 le 32
 !
