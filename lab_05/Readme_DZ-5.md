@@ -46,8 +46,6 @@ interface Ethernet3
 interface Loopback0
    ip address 10.1.0.1/32
 !
-ip routing
-!
 ip prefix-list LOOPBACKS seq 10 permit 10.1.0.0/23 le 32
 !
 route-map LOOPBACKS permit 10
