@@ -72,6 +72,7 @@ router bgp 65000
       no neighbor LEAF_OVERLAY activate
 !
 ```
+
 ##### Spine-02
 ```
 !
@@ -123,6 +124,7 @@ router bgp 65000
       no neighbor LEAF_OVERLAY activate
 !
 ```
+
 ##### Leaf-01
 ```
 !
@@ -192,6 +194,7 @@ router bgp 65001
       no neighbor SPINE_OVERLAY activate
 !
 ```
+
 ##### Leaf-02 
 ```
 !
@@ -258,6 +261,7 @@ router bgp 65002
       no neighbor SPINE_OVERLAY activate
 !
 ```
+
 ##### Leaf-03
 ```
 !
@@ -335,24 +339,28 @@ router bgp 65003
       no neighbor SPINE_OVERLAY activate
 !
 ```
+
 ##### Client-01
 ```
 NAME        : VPCS[1]
 IP/MASK     : 192.168.0.1/24
 GATEWAY     : 192.168.0.254
 ```
+
 ##### Client-02
 ```
 NAME        : VPCS[1]
 IP/MASK     : 192.168.1.1/24
 GATEWAY     : 192.168.1.254
 ```
+
 ##### Client-03
 ```
 NAME        : VPCS[1]
 IP/MASK     : 192.168.0.2/24
 GATEWAY     : 192.168.0.254
 ```
+
 ##### Client-04
 ```
 NAME        : VPCS[1]
@@ -438,7 +446,6 @@ Neighbor Status Codes: m - Under maintenance
   10.1.0.1         4 65000            447       468    0    0 03:46:45 Estab   3      3
   10.1.0.2         4 65000            418       408    0    0 03:46:22 Estab   3      3
 ```
-
 ```
 Leaf-01#show bgp evpn
 BGP routing table information for VRF default
@@ -476,7 +483,6 @@ Neighbor Status Codes: m - Under maintenance
   10.1.0.1         4 65000            398       410    0    0 03:50:16 Estab   3      3
   10.1.0.2         4 65000            397       400    0    0 03:50:16 Estab   3      3
 ```
-
 ```
 Leaf-02#show bgp evpn
 BGP routing table information for VRF default
@@ -513,7 +519,6 @@ Neighbor Status Codes: m - Under maintenance
   10.1.0.1         4 65000            280       299    0    0 03:41:03 Estab   2      2
   10.1.0.2         4 65000            280       300    0    0 03:41:03 Estab   2      2
 ```
-
 ```
 Leaf-03#show bgp evpn
 BGP routing table information for VRF default
@@ -554,7 +559,6 @@ VPCS> ping 192.168.0.2
 ##### Client-02
 ```
 VPCS> ping 192.168.1.2
-
 84 bytes from 192.168.1.2 icmp_seq=1 ttl=64 time=79.145 ms
 84 bytes from 192.168.1.2 icmp_seq=2 ttl=64 time=34.785 ms
 84 bytes from 192.168.1.2 icmp_seq=3 ttl=64 time=30.982 ms
@@ -564,7 +568,6 @@ VPCS> ping 192.168.1.2
 ##### Client-03
 ```
 VPCS> ping 192.168.0.1
-
 84 bytes from 192.168.0.1 icmp_seq=1 ttl=64 time=48.626 ms
 84 bytes from 192.168.0.1 icmp_seq=2 ttl=64 time=46.194 ms
 84 bytes from 192.168.0.1 icmp_seq=3 ttl=64 time=23.423 ms
@@ -574,7 +577,6 @@ VPCS> ping 192.168.0.1
 ##### Client-04
 ```
 VPCS> ping 192.168.1.1
-
 84 bytes from 192.168.1.1 icmp_seq=1 ttl=64 time=42.132 ms
 84 bytes from 192.168.1.1 icmp_seq=2 ttl=64 time=27.224 ms
 84 bytes from 192.168.1.1 icmp_seq=3 ttl=64 time=32.065 ms
@@ -582,7 +584,8 @@ VPCS> ping 192.168.1.1
 84 bytes from 192.168.1.1 icmp_seq=5 ttl=64 time=21.733 ms
 ```
 
-Фиксируем данные на коммутаторах   
+Фиксируем данные на коммутаторах  
+
 ##### Spine-01
 ```
 Spine-01#show bgp evpn route-type mac-ip
