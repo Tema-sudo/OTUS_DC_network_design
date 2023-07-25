@@ -261,10 +261,9 @@ VPCS> ping 10.1.3.253
 ```
 
 ##### Leaf-03
+_вывод сокращен_
 ```
 Leaf-03#show bgp evpn route-type mac-ip
-
-_вывод сокращен_
 
           Network                Next Hop              Metric  LocPref Weight  Path
  * >Ec   RD: 10.1.1.1:10010 mac-ip 0050.7966.680f
@@ -283,14 +282,12 @@ _вывод сокращен_
                                  -                     -       -       0       i
  * >     RD: 10.1.1.3:10020 mac-ip 0050.7966.6812 10.1.3.253
                                  -                     -       -       0       i
-
 ```
 
+_вывод сокращен_
 ```
 Leaf-03#show ip route vrf SEMETIRB
 VRF: SEMETIRB
-
-_вывод сокращен_
 
  B E      10.1.3.126/32 [200/0] via VTEP 10.1.2.1 VNI 65000 router-mac 50:00:00:a1:7a:a7 local-interface Vxlan1
  C        10.1.3.0/25 is directly connected, Vlan10
