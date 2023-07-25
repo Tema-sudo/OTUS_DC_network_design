@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2023-07-25T06:22:36.261Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36" etag="2lrJ3PTmvIcFaYCISMKL" version="21.6.2" type="github">
+<mxfile host="app.diagrams.net" modified="2023-07-25T06:32:12.956Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36" etag="YFaw0T0eSJNv63-9dluu" version="21.6.2" type="github">
   <diagram name="Page-1" id="c37626ed-c26b-45fb-9056-f9ebc6bb27b6">
-    <mxGraphModel dx="1799" dy="961" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" background="none" math="0" shadow="0">
+    <mxGraphModel dx="3597" dy="1923" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" background="none" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -176,11 +176,14 @@
             <mxPoint x="890.5" y="557.5" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="C9soJnvK-WdOjWq8ESSx-10" value="" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#004C99;strokeWidth=2;" vertex="1" parent="1">
-          <mxGeometry x="20" y="80" width="308.25" height="160" as="geometry" />
+        <mxCell id="C9soJnvK-WdOjWq8ESSx-10" value="" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#660066;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="797" y="80" width="339" height="140" as="geometry" />
         </mxCell>
-        <mxCell id="C9soJnvK-WdOjWq8ESSx-11" value="&lt;font color=&quot;#004c99&quot;&gt;&lt;b&gt;Client - VRF SEMETIRB&amp;nbsp;&lt;/b&gt;&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=20;fontFamily=Helvetica;horizontal=1;strokeWidth=0;" vertex="1" parent="1">
-          <mxGeometry x="23" y="90" width="230" height="50" as="geometry" />
+        <mxCell id="C9soJnvK-WdOjWq8ESSx-11" value="&lt;font color=&quot;#004c99&quot;&gt;Client - VRF SEMETIRB&amp;nbsp;&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=20;fontFamily=Helvetica;horizontal=1;strokeWidth=0;" vertex="1" parent="1">
+          <mxGeometry x="799" y="90" width="230" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="C9soJnvK-WdOjWq8ESSx-12" value="&lt;div&gt;&lt;font color=&quot;#004c99&quot;&gt;VLAN 10/VNI 10010/IP 10.1.3.1/25&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#004c99&quot;&gt;VLAN 20/VNI 10020/IP 10.1.3.129/25&lt;/font&gt;&lt;/div&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=20;fontFamily=Helvetica;horizontal=1;strokeWidth=0;" vertex="1" parent="1">
+          <mxGeometry x="799" y="150" width="340" height="50" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
