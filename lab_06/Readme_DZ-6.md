@@ -44,16 +44,28 @@ GW|10.1.3.1|10.1.3.129|10.1.3.1|10.1.5.8/31|10.1.3.129|
 
 ##### Client-01
 ```
+NAME : VPCS[1]
+IP/MASK : 10.1.3.126/25
+GATEWAY : 10.1.3.1
 ```
 
 ##### Client-02
 ```
+NAME : VPCS[1]
+IP/MASK : 10.1.3.254/25
+GATEWAY : 10.1.3.129
 ```
 
 ##### Client-03
 ```
+NAME : VPCS[1]
+IP/MASK : 10.1.3.125/25
+GATEWAY : 10.1.3.1
 ```
 
 ##### Client-04
 ```
+NAME : VPCS[1]
+IP/MASK : 10.1.3.253/25
+GATEWAY : 10.1.3.129
 ```
