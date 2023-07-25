@@ -300,13 +300,14 @@ Address         Age (sec)  Hardware Addr   Interface
 
 ##### Client-01
 ```
-VPCS> ping 10.1.3.253
-84 bytes from 10.1.3.254 icmp_seq=1 ttl=62 time=65.935 ms
-84 bytes from 10.1.3.254 icmp_seq=2 ttl=62 time=60.141 ms
-84 bytes from 10.1.3.254 icmp_seq=3 ttl=62 time=34.004 ms
-84 bytes from 10.1.3.254 icmp_seq=4 ttl=62 time=35.739 ms
-84 bytes from 10.1.3.254 icmp_seq=5 ttl=62 time=35.703 ms
-
+VPCS> ping 10.1.3.253 -c 1000
+84 bytes from 10.1.3.253 icmp_seq=1 ttl=62 time=504.598 ms
+84 bytes from 10.1.3.253 icmp_seq=2 ttl=62 time=116.731 ms
+84 bytes from 10.1.3.253 icmp_seq=3 ttl=62 time=27.938 ms
+84 bytes from 10.1.3.253 icmp_seq=4 ttl=62 time=42.113 ms
+84 bytes from 10.1.3.253 icmp_seq=5 ttl=62 time=31.830 ms
+84 bytes from 10.1.3.253 icmp_seq=6 ttl=62 time=27.015 ms
+84 bytes from 10.1.3.253 icmp_seq=7 ttl=62 time=36.870 ms
 ```
 
 ##### Leaf-01
