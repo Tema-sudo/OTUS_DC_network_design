@@ -288,7 +288,6 @@ _вывод сокращен_
 ```
 Leaf-03#show ip route vrf SEMETIRB
 VRF: SEMETIRB
-
  B E      10.1.3.126/32 [200/0] via VTEP 10.1.2.1 VNI 65000 router-mac 50:00:00:a1:7a:a7 local-interface Vxlan1
  C        10.1.3.0/25 is directly connected, Vlan10
  C        10.1.3.128/25 is directly connected, Vlan20
@@ -300,6 +299,56 @@ Address         Age (sec)  Hardware Addr   Interface
 10.1.3.125        0:03:58  0050.7966.6811  Vlan10, Ethernet3
 10.1.3.126              -  0050.7966.680f  Vlan10, Vxlan1
 10.1.3.253        0:01:57  0050.7966.6812  Vlan20, Ethernet4
+```
+
+Проверим взаимодействие через VXLAN EVPN L3 фабрику Client-3 c Client-2, который находится в другой подсети
+
+##### Client-03
+```
+VPCS> ping 10.1.3.254
+84 bytes from 10.1.3.254 icmp_seq=1 ttl=62 time=65.935 ms
+84 bytes from 10.1.3.254 icmp_seq=2 ttl=62 time=60.141 ms
+84 bytes from 10.1.3.254 icmp_seq=3 ttl=62 time=34.004 ms
+84 bytes from 10.1.3.254 icmp_seq=4 ttl=62 time=35.739 ms
+84 bytes from 10.1.3.254 icmp_seq=5 ttl=62 time=35.703 ms
+
+```
+
+##### Leaf-03
+_вывод сокращен_
+```
+          Network                Next Hop              Metric  LocPref Weight  Path
+ * >Ec   RD: 10.1.1.2:10020 mac-ip 0050.7966.6810
+                                 10.1.2.2              -       100     0       65000 65002 i
+ *  ec   RD: 10.1.1.2:10020 mac-ip 0050.7966.6810
+                                 10.1.2.2              -       100     0       65000 65002 i
+ * >Ec   RD: 10.1.1.2:10020 mac-ip 0050.7966.6810 10.1.3.254
+                                 10.1.2.2              -       100     0       65000 65002 i
+ *  ec   RD: 10.1.1.2:10020 mac-ip 0050.7966.6810 10.1.3.254
+                                 10.1.2.2              -       100     0       65000 65002 i
+ * >     RD: 10.1.1.3:10010 mac-ip 0050.7966.6811
+                                 -                     -       -       0       i
+ * >     RD: 10.1.1.3:10010 mac-ip 0050.7966.6811 10.1.3.125
+                                 -                     -       -       0       i
+
+```
+
+_вывод сокращен_
+```
+Leaf-03#show ip route vrf SEMETIRB
+VRF: SEMETIRB
+ C        10.1.3.0/25 is directly connected, Vlan10
+ B E      10.1.3.254/32 [200/0] via VTEP 10.1.2.2 VNI 65000 router-mac 50:00:00:87:d6:b1 local-interface Vxlan1
+ C        10.1.3.128/25 is directly connected, Vlan20
+
+```
+
+```
+Leaf-03#show arp vrf SEMETIRB
+Address         Age (sec)  Hardware Addr   Interface
+10.1.3.125        0:02:12  0050.7966.6811  Vlan10, Ethernet3
+10.1.3.253        0:00:59  0050.7966.6812  Vlan20, Ethernet4
+10.1.3.254              -  0050.7966.6810  Vlan20, Vxlan1
 ```
 
 
