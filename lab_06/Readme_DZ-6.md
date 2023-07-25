@@ -38,12 +38,12 @@ vrf instance SEMETIRB
 interface Vlan10
    description ### Client-1 ###
    vrf SEMETIRB
-   ip address 10.1.3.1/25
+   ip address virtual 10.1.3.1/25
 !
 interface Vxlan1
    vxlan source-interface Loopback1
    vxlan udp-port 4789
-   vxlan vlan 10 vni 10010
+   vxlan vlan 10-20 vni 10010-10020
    vxlan vrf SEMETIRB vni 65000
 !
 ip virtual-router mac-address 00:11:22:33:44:55
@@ -58,11 +58,12 @@ route-map LOOPBACKS permit 10
 !
 router bgp 65001
    router-id 10.1.1.1
+   maximum-paths 128
    neighbor SPINE_OVERLA peer group
    neighbor SPINE_OVERLAY peer group
    neighbor SPINE_OVERLAY remote-as 65000
    neighbor SPINE_OVERLAY update-source Loopback0
-   neighbor SPINE_OVERLAY ebgp-multihop 2
+   neighbor SPINE_OVERLAY ebgp-multihop 10
    neighbor SPINE_OVERLAY send-community
    neighbor SPINE_UNDERLAY peer group
    neighbor SPINE_UNDERLAY remote-as 65000
@@ -87,6 +88,7 @@ router bgp 65001
       rd 10.1.1.1:65000
       route-target import evpn 1:65000
       route-target export evpn 1:65000
+      redistribute connected
 !
 ```
 
@@ -98,7 +100,7 @@ vrf instance SEMETIRB
 interface Vlan20
    description ### Client-2 ###
    vrf SEMETIRB
-   ip address 10.1.3.129/25
+   ip address virtual 10.1.3.129/25
 !
 interface Vxlan1
    vxlan source-interface Loopback1
@@ -121,7 +123,7 @@ router bgp 65002
    neighbor SPINE_OVERLAY peer group
    neighbor SPINE_OVERLAY remote-as 65000
    neighbor SPINE_OVERLAY update-source Loopback0
-   neighbor SPINE_OVERLAY ebgp-multihop 2
+   neighbor SPINE_OVERLAY ebgp-multihop 10
    neighbor SPINE_OVERLAY send-community
    neighbor SPINE_UNDERLAY peer group
    neighbor SPINE_UNDERLAY remote-as 65000
@@ -146,6 +148,7 @@ router bgp 65002
       rd 10.1.1.2:65000
       route-target import evpn 1:65000
       route-target export evpn 1:65000
+      redistribute connected
 !
 ```
 
@@ -157,12 +160,12 @@ vrf instance SEMETIRB
 interface Vlan10
    description ### Client-1 ###
    vrf SEMETIRB
-   ip address 10.1.3.1/25
+   ip address virtual 10.1.3.1/25
 !
 interface Vlan20
    description ### Client-2 ###
    vrf SEMETIRB
-   ip address 10.1.3.129/25
+   ip address virtual 10.1.3.129/25
 !
 interface Vxlan1
    vxlan source-interface Loopback1
@@ -185,7 +188,7 @@ router bgp 65003
    neighbor SPINE_OVERLAY peer group
    neighbor SPINE_OVERLAY remote-as 65000
    neighbor SPINE_OVERLAY update-source Loopback0
-   neighbor SPINE_OVERLAY ebgp-multihop 2
+   neighbor SPINE_OVERLAY ebgp-multihop 10
    neighbor SPINE_OVERLAY send-community
    neighbor SPINE_UNDERLAY peer group
    neighbor SPINE_UNDERLAY remote-as 65000
@@ -215,6 +218,7 @@ router bgp 65003
       rd 10.1.1.3:65000
       route-target import evpn 1:65000
       route-target export evpn 1:65000
+      redistribute connected
 !
 ```
 
@@ -264,16 +268,7 @@ VPCS> ping 10.1.3.253
 _вывод сокращен_
 ```
 Leaf-03#show bgp evpn route-type mac-ip
-
           Network                Next Hop              Metric  LocPref Weight  Path
- * >Ec   RD: 10.1.1.1:10010 mac-ip 0050.7966.680f
-                                 10.1.2.1              -       100     0       65000 65001 i
- *  ec   RD: 10.1.1.1:10010 mac-ip 0050.7966.680f
-                                 10.1.2.1              -       100     0       65000 65001 i
- * >Ec   RD: 10.1.1.1:10010 mac-ip 0050.7966.680f 10.1.3.126
-                                 10.1.2.1              -       100     0       65000 65001 i
- *  ec   RD: 10.1.1.1:10010 mac-ip 0050.7966.680f 10.1.3.126
-                                 10.1.2.1              -       100     0       65000 65001 i
  * >     RD: 10.1.1.3:10010 mac-ip 0050.7966.6811
                                  -                     -       -       0       i
  * >     RD: 10.1.1.3:10010 mac-ip 0050.7966.6811 10.1.3.125
@@ -282,30 +277,30 @@ Leaf-03#show bgp evpn route-type mac-ip
                                  -                     -       -       0       i
  * >     RD: 10.1.1.3:10020 mac-ip 0050.7966.6812 10.1.3.253
                                  -                     -       -       0       i
+
 ```
 
 _вывод сокращен_
 ```
 Leaf-03#show ip route vrf SEMETIRB
 VRF: SEMETIRB
- B E      10.1.3.126/32 [200/0] via VTEP 10.1.2.1 VNI 65000 router-mac 50:00:00:a1:7a:a7 local-interface Vxlan1
  C        10.1.3.0/25 is directly connected, Vlan10
  C        10.1.3.128/25 is directly connected, Vlan20
 ```
 
 ```
-Leaf-03#show ip arp vrf SEMETIRB
+Leaf-03#show arp vrf SEMETIRB
 Address         Age (sec)  Hardware Addr   Interface
-10.1.3.125        0:03:58  0050.7966.6811  Vlan10, Ethernet3
-10.1.3.126              -  0050.7966.680f  Vlan10, Vxlan1
-10.1.3.253        0:01:57  0050.7966.6812  Vlan20, Ethernet4
+10.1.3.125        0:01:16  0050.7966.6811  Vlan10, Ethernet3
+10.1.3.253        0:01:16  0050.7966.6812  Vlan20, Ethernet4
+
 ```
 
-Проверим взаимодействие через VXLAN EVPN L3 фабрику Client-3 c Client-2, который находится в другой подсети
+Проверим взаимодействие через VXLAN EVPN L3 фабрику Client-1 c Client-4, который находится в другой подсети
 
-##### Client-03
+##### Client-01
 ```
-VPCS> ping 10.1.3.254
+VPCS> ping 10.1.3.253
 84 bytes from 10.1.3.254 icmp_seq=1 ttl=62 time=65.935 ms
 84 bytes from 10.1.3.254 icmp_seq=2 ttl=62 time=60.141 ms
 84 bytes from 10.1.3.254 icmp_seq=3 ttl=62 time=34.004 ms
@@ -314,41 +309,52 @@ VPCS> ping 10.1.3.254
 
 ```
 
-##### Leaf-03
+##### Leaf-01
 _вывод сокращен_
 ```
+Leaf-01#show bgp evpn route-type mac-ip
           Network                Next Hop              Metric  LocPref Weight  Path
- * >Ec   RD: 10.1.1.2:10020 mac-ip 0050.7966.6810
-                                 10.1.2.2              -       100     0       65000 65002 i
- *  ec   RD: 10.1.1.2:10020 mac-ip 0050.7966.6810
-                                 10.1.2.2              -       100     0       65000 65002 i
- * >Ec   RD: 10.1.1.2:10020 mac-ip 0050.7966.6810 10.1.3.254
-                                 10.1.2.2              -       100     0       65000 65002 i
- *  ec   RD: 10.1.1.2:10020 mac-ip 0050.7966.6810 10.1.3.254
-                                 10.1.2.2              -       100     0       65000 65002 i
- * >     RD: 10.1.1.3:10010 mac-ip 0050.7966.6811
+ * >     RD: 10.1.1.1:10010 mac-ip 0050.7966.680f
                                  -                     -       -       0       i
- * >     RD: 10.1.1.3:10010 mac-ip 0050.7966.6811 10.1.3.125
+ * >     RD: 10.1.1.1:10010 mac-ip 0050.7966.680f 10.1.3.126
                                  -                     -       -       0       i
+ * >Ec   RD: 10.1.1.3:10010 mac-ip 0050.7966.6811
+                                 10.1.2.3              -       100     0       65000 65003 i
+ *  ec   RD: 10.1.1.3:10010 mac-ip 0050.7966.6811
+                                 10.1.2.3              -       100     0       65000 65003 i
+ * >Ec   RD: 10.1.1.3:10010 mac-ip 0050.7966.6811 10.1.3.125
+                                 10.1.2.3              -       100     0       65000 65003 i
+ *  ec   RD: 10.1.1.3:10010 mac-ip 0050.7966.6811 10.1.3.125
+                                 10.1.2.3              -       100     0       65000 65003 i
+ * >Ec   RD: 10.1.1.3:10020 mac-ip 0050.7966.6812
+                                 10.1.2.3              -       100     0       65000 65003 i
+ *  ec   RD: 10.1.1.3:10020 mac-ip 0050.7966.6812
+                                 10.1.2.3              -       100     0       65000 65003 i
+ * >Ec   RD: 10.1.1.3:10020 mac-ip 0050.7966.6812 10.1.3.253
+                                 10.1.2.3              -       100     0       65000 65003 i
+ *  ec   RD: 10.1.1.3:10020 mac-ip 0050.7966.6812 10.1.3.253
+                                 10.1.2.3              -       100     0       65000 65003 i
 
 ```
 
 _вывод сокращен_
 ```
-Leaf-03#show ip route vrf SEMETIRB
+Leaf-01#show ip route vrf SEMETIRB
+
 VRF: SEMETIRB
+
+ B E      10.1.3.125/32 [200/0] via VTEP 10.1.2.3 VNI 65000 router-mac 50:00:00:8c:5c:d7 local-interface Vxlan1
  C        10.1.3.0/25 is directly connected, Vlan10
+ B E      10.1.3.253/32 [200/0] via VTEP 10.1.2.3 VNI 65000 router-mac 50:00:00:8c:5c:d7 local-interface Vxlan1
  B E      10.1.3.254/32 [200/0] via VTEP 10.1.2.2 VNI 65000 router-mac 50:00:00:87:d6:b1 local-interface Vxlan1
- C        10.1.3.128/25 is directly connected, Vlan20
-
+ B E      10.1.3.128/25 [200/0] via VTEP 10.1.2.3 VNI 65000 router-mac 50:00:00:8c:5c:d7 local-interface Vxlan1
+                                via VTEP 10.1.2.2 VNI 65000 router-mac 50:00:00:87:d6:b1 local-interface Vxlan1
 ```
-
 ```
-Leaf-03#show arp vrf SEMETIRB
+Leaf-01#show arp vrf SEMETIRB
 Address         Age (sec)  Hardware Addr   Interface
-10.1.3.125        0:02:12  0050.7966.6811  Vlan10, Ethernet3
-10.1.3.253        0:00:59  0050.7966.6812  Vlan20, Ethernet4
-10.1.3.254              -  0050.7966.6810  Vlan20, Vxlan1
+10.1.3.125              -  0050.7966.6811  Vlan10, Vxlan1
+10.1.3.126        0:01:14  0050.7966.680f  Vlan10, Ethernet3
 ```
 
 
