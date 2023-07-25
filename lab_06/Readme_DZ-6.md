@@ -245,3 +245,65 @@ NAME : VPCS[1]
 IP/MASK : 10.1.3.253/25
 GATEWAY : 10.1.3.129
 ```
+
+#### 4. Демонстрация работы Overlay VxLAN EVPN L3.
+Проверим локальное взаимодействие Client-3 с Client-4 через Leaf-3
+
+##### Client-03
+```
+VPCS> ping 10.1.3.253
+84 bytes from 10.1.3.253 icmp_seq=1 ttl=63 time=68.612 ms
+84 bytes from 10.1.3.253 icmp_seq=2 ttl=63 time=15.201 ms
+84 bytes from 10.1.3.253 icmp_seq=3 ttl=63 time=10.998 ms
+84 bytes from 10.1.3.253 icmp_seq=4 ttl=63 time=9.351 ms
+84 bytes from 10.1.3.253 icmp_seq=5 ttl=63 time=12.486 ms
+
+```
+
+##### Leaf-03
+```
+Leaf-03#show bgp evpn route-type mac-ip
+
+_вывод сокращен_
+
+          Network                Next Hop              Metric  LocPref Weight  Path
+ * >Ec   RD: 10.1.1.1:10010 mac-ip 0050.7966.680f
+                                 10.1.2.1              -       100     0       65000 65001 i
+ *  ec   RD: 10.1.1.1:10010 mac-ip 0050.7966.680f
+                                 10.1.2.1              -       100     0       65000 65001 i
+ * >Ec   RD: 10.1.1.1:10010 mac-ip 0050.7966.680f 10.1.3.126
+                                 10.1.2.1              -       100     0       65000 65001 i
+ *  ec   RD: 10.1.1.1:10010 mac-ip 0050.7966.680f 10.1.3.126
+                                 10.1.2.1              -       100     0       65000 65001 i
+ * >     RD: 10.1.1.3:10010 mac-ip 0050.7966.6811
+                                 -                     -       -       0       i
+ * >     RD: 10.1.1.3:10010 mac-ip 0050.7966.6811 10.1.3.125
+                                 -                     -       -       0       i
+ * >     RD: 10.1.1.3:10020 mac-ip 0050.7966.6812
+                                 -                     -       -       0       i
+ * >     RD: 10.1.1.3:10020 mac-ip 0050.7966.6812 10.1.3.253
+                                 -                     -       -       0       i
+
+```
+
+```
+Leaf-03#show ip route vrf SEMETIRB
+VRF: SEMETIRB
+
+_вывод сокращен_
+
+ B E      10.1.3.126/32 [200/0] via VTEP 10.1.2.1 VNI 65000 router-mac 50:00:00:a1:7a:a7 local-interface Vxlan1
+ C        10.1.3.0/25 is directly connected, Vlan10
+ C        10.1.3.128/25 is directly connected, Vlan20
+```
+
+```
+Leaf-03#show ip arp vrf SEMETIRB
+Address         Age (sec)  Hardware Addr   Interface
+10.1.3.125        0:03:58  0050.7966.6811  Vlan10, Ethernet3
+10.1.3.126              -  0050.7966.680f  Vlan10, Vxlan1
+10.1.3.253        0:01:57  0050.7966.6812  Vlan20, Ethernet4
+```
+
+
+
