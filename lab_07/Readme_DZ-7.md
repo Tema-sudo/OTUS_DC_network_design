@@ -409,4 +409,28 @@ interface Vlan10
 ```
 
 #### 4. Демонстрация работы VxLAN MLAG.
-Проверим локальное взаимодействие Client-1 c Client-3 и наоборот
+Проверим локальное взаимодействие Client-1 c Client-3 и наоборот.
+
+##### Client-01
+```
+VPCS> ping 10.1.3.125
+84 bytes from 10.1.3.125 icmp_seq=1 ttl=64 time=45.056 ms
+84 bytes from 10.1.3.125 icmp_seq=2 ttl=64 time=26.370 ms
+84 bytes from 10.1.3.125 icmp_seq=3 ttl=64 time=39.932 ms
+84 bytes from 10.1.3.125 icmp_seq=4 ttl=64 time=29.254 ms
+84 bytes from 10.1.3.125 icmp_seq=5 ttl=64 time=30.432 ms
+```
+
+##### Client-03
+```
+Client-3#ping 10.1.3.126
+PING 10.1.3.126 (10.1.3.126) 72(100) bytes of data.
+80 bytes from 10.1.3.126: icmp_seq=1 ttl=64 time=63.8 ms
+80 bytes from 10.1.3.126: icmp_seq=2 ttl=64 time=60.4 ms
+80 bytes from 10.1.3.126: icmp_seq=3 ttl=64 time=56.0 ms
+80 bytes from 10.1.3.126: icmp_seq=4 ttl=64 time=53.4 ms
+80 bytes from 10.1.3.126: icmp_seq=5 ttl=64 time=49.7 ms
+--- 10.1.3.126 ping statistics ---
+5 packets transmitted, 5 received, 0% packet loss, time 47ms
+rtt min/avg/max/mdev = 49.713/56.723/63.857/5.005 ms, pipe 5, ipg/ewma 11.852/59.928 ms
+```
