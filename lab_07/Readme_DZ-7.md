@@ -25,3 +25,51 @@ Leaf-3|10.1.1.3/32|10.1.2.3/32|10.1.2.20/32|10.1.5.5/31|10.1.5.11/31|N/A|
 |---|---|---|
 IP/MASK|10.1.3.126/25|10.1.3.125/25|
 
+#### 3. Настройки
+
+Приведены донастройки для организации M-LAG.
+
+##### Leaf-01
+```
+```
+
+##### Leaf-02 
+```
+```
+
+##### Leaf-03
+```
+```
+
+##### Client-01
+```
+NAME : VPCS[1]
+IP/MASK : 10.1.3.126/25
+GATEWAY : 10.1.3.1
+```
+
+##### Client-03
+```
+!
+hostname Client-3
+!
+vlan 10
+   name test_M-LAG
+!
+interface Port-Channel15
+   switchport access vlan 10
+!
+interface Ethernet1
+   switchport access vlan 10
+   channel-group 15 mode active
+!
+interface Ethernet2
+   switchport access vlan 10
+   channel-group 15 mode active
+!
+interface Vlan10
+   description ### test_M-LAG ###
+   ip address 10.1.3.125/25
+!
+```
+
