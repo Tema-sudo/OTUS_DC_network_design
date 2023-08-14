@@ -31,10 +31,215 @@ IP/MASK|10.1.3.126/25|10.1.3.125/25|
 
 ##### Leaf-01
 ```
+!
+hostname Leaf-01
+!
+vlan 10
+   name ###Service-1###
+!
+vrf instance SEMETIRB
+!
+interface Ethernet1
+   description ### to_Spine-1_eth1 ###
+   no switchport
+   ip address 10.1.5.1/31
+!
+interface Ethernet2
+   description ### to_Spine-2_eth1 ###
+   no switchport
+   ip address 10.1.5.7/31
+!
+interface Ethernet3
+   description ### Client-1 ###
+   switchport access vlan 10
+!
+interface Loopback0
+   ip address 10.1.1.1/32
+!
+interface Loopback1
+   ip address 10.1.2.1/32
+!
+interface Vxlan1
+   vxlan source-interface Loopback1
+   vxlan udp-port 4789
+   vxlan vlan 10-20 vni 10010-10020
+   vxlan vrf SEMETIRB vni 65000
+   vxlan vlan 10 flood vtep 10.1.2.20
+!
+ip virtual-router mac-address 00:11:22:33:44:55
+!
+ip routing
+ip routing vrf SEMETIRB
+!
+ip prefix-list LOOPBACKS seq 10 permit 10.1.0.0/22 le 32
+!
+route-map LOOPBACKS permit 10
+   match ip address prefix-list LOOPBACKS
+!
+router bgp 65001
+   router-id 10.1.1.1
+   maximum-paths 128
+   neighbor SPINE_OVERLA peer group
+   neighbor SPINE_OVERLAY peer group
+   neighbor SPINE_OVERLAY remote-as 65000
+   neighbor SPINE_OVERLAY update-source Loopback0
+   neighbor SPINE_OVERLAY ebgp-multihop 10
+   neighbor SPINE_OVERLAY send-community
+   neighbor SPINE_UNDERLAY peer group
+   neighbor SPINE_UNDERLAY remote-as 65000
+   neighbor 10.1.0.1 peer group SPINE_OVERLAY
+   neighbor 10.1.0.2 peer group SPINE_OVERLAY
+   neighbor 10.1.5.0 peer group SPINE_UNDERLAY
+   neighbor 10.1.5.6 peer group SPINE_UNDERLAY
+   redistribute connected route-map LOOPBACKS
+   !
+   vlan 10
+      rd 10.1.1.1:10010
+      route-target both 1:10010
+      redistribute learned
+   !
+   address-family evpn
+      neighbor SPINE_OVERLAY activate
+   !
+   address-family ipv4
+      no neighbor SPINE_OVERLAY activate
+   !
+   vrf SEMETIRB
+      rd 10.1.1.1:65000
+      route-target import evpn 1:65000
+      route-target export evpn 1:65000
+      redistribute connected
+!
 ```
 
 ##### Leaf-02 
 ```
+!
+hostname Leaf-02
+!
+vlan 10
+   name ###Service-1###
+!
+vlan 20
+   name ###Service-2###
+!
+vlan 4094
+   name for_M-LAG
+!
+vrf instance SEMETIRB
+!
+interface Port-Channel10
+   description ### M-LAG peer-link ###
+   switchport mode trunk
+!
+interface Port-Channel15
+   switchport access vlan 10
+   mlag 10
+!
+interface Ethernet1
+   description ### to_Spine-1_eth2 ###
+   no switchport
+   ip address 10.1.5.3/31
+!
+interface Ethernet2
+   description ### to_Spine-2_eth2 ###
+   no switchport
+   ip address 10.1.5.9/31
+!
+interface Ethernet3
+   description ### Client-2 ###
+   switchport access vlan 20
+!
+interface Ethernet5
+   description ### to_M-LAG_client ###
+   channel-group 15 mode active
+!
+interface Ethernet7
+   description ### Peer-link ###
+   channel-group 10 mode active
+!
+interface Ethernet8
+   description ### Peer-link ###
+   channel-group 10 mode active
+!
+interface Loopback0
+   ip address 10.1.1.2/32
+!
+interface Loopback1
+   ip address 10.1.2.2/32
+   ip address 10.1.2.20/32 secondary
+!
+interface Vlan20
+   description ### Client-2 ###
+   vrf SEMETIRB
+   ip address virtual 10.1.3.129/25
+!
+interface Vlan4094
+   description ### M-LAG peer-link ###
+   ip address 192.168.0.1/30
+!
+interface Vxlan1
+   vxlan source-interface Loopback1
+   vxlan udp-port 4789
+   vxlan vlan 10-20 vni 10010-10020
+   vxlan vrf SEMETIRB vni 65000
+   vxlan vlan 10 flood vtep 10.1.2.1
+!
+ip virtual-router mac-address 00:11:22:33:44:55
+!
+ip routing
+ip routing vrf SEMETIRB
+!
+ip prefix-list LOOPBACKS seq 10 permit 10.1.0.0/22 le 32
+!
+mlag configuration
+   domain-id Arista-1
+   local-interface Vlan4094
+   peer-address 192.168.0.2
+   peer-link Port-Channel10
+   dual-primary detection delay 5 action errdisable all-interfaces
+   dual-primary recovery delay mlag 15 non-mlag 30
+!
+route-map LOOPBACKS permit 10
+   match ip address prefix-list LOOPBACKS
+!
+router bgp 65002
+   router-id 10.1.1.2
+   neighbor SPINE_OVERLAY peer group
+   neighbor SPINE_OVERLAY remote-as 65000
+   neighbor SPINE_OVERLAY update-source Loopback0
+   neighbor SPINE_OVERLAY ebgp-multihop 2
+   neighbor SPINE_OVERLAY send-community
+   neighbor SPINE_UNDERLAY peer group
+   neighbor SPINE_UNDERLAY remote-as 65000
+   neighbor 10.1.0.1 peer group SPINE_OVERLAY
+   neighbor 10.1.0.2 peer group SPINE_OVERLAY
+   neighbor 10.1.5.2 peer group SPINE_UNDERLAY
+   neighbor 10.1.5.8 peer group SPINE_UNDERLAY
+   redistribute connected route-map LOOPBACKS
+   !
+   vlan 10
+      rd 10.1.1.2:10010
+      route-target both 1:10010
+      redistribute learned
+   !
+   vlan 20
+      rd 10.1.1.2:10020
+      route-target both 1:10020
+      redistribute learned
+   !
+   address-family evpn
+      neighbor SPINE_OVERLAY activate
+   !
+   address-family ipv4
+      no neighbor SPINE_OVERLAY activate
+   !
+   vrf SEMETIRB
+      rd 10.1.1.2:65000
+      route-target import evpn 1:65000
+      route-target export evpn 1:65000
+      redistribute connected
+!
 ```
 
 ##### Leaf-03
