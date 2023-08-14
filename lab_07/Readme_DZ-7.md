@@ -434,3 +434,203 @@ PING 10.1.3.126 (10.1.3.126) 72(100) bytes of data.
 5 packets transmitted, 5 received, 0% packet loss, time 47ms
 rtt min/avg/max/mdev = 49.713/56.723/63.857/5.005 ms, pipe 5, ipg/ewma 11.852/59.928 ms
 ```
+
+##### Leaf-01
+
+_вывод сокращен_
+```
+Leaf-01#show ip route
+ B E      10.1.0.1/32 [200/0] via 10.1.5.0, Ethernet1
+ B E      10.1.0.2/32 [200/0] via 10.1.5.6, Ethernet2
+ C        10.1.1.1/32 is directly connected, Loopback0
+ B E      10.1.1.2/32 [200/0] via 10.1.5.0, Ethernet1
+                              via 10.1.5.6, Ethernet2
+ B E      10.1.1.3/32 [200/0] via 10.1.5.0, Ethernet1
+                              via 10.1.5.6, Ethernet2
+ C        10.1.2.1/32 is directly connected, Loopback1
+ B E      10.1.2.2/32 [200/0] via 10.1.5.0, Ethernet1
+                              via 10.1.5.6, Ethernet2
+ B E      10.1.2.3/32 [200/0] via 10.1.5.0, Ethernet1
+                              via 10.1.5.6, Ethernet2
+ B E      10.1.2.20/32 [200/0] via 10.1.5.0, Ethernet1
+                               via 10.1.5.6, Ethernet2
+ C        10.1.5.0/31 is directly connected, Ethernet1
+ C        10.1.5.6/31 is directly connected, Ethernet2
+```
+
+```
+Leaf-01#show mac address-table
+          Mac Address Table
+------------------------------------------------------------------
+
+Vlan    Mac Address       Type        Ports      Moves   Last Move
+----    -----------       ----        -----      -----   ---------
+  10    0050.7966.680f    DYNAMIC     Et3        1       0:08:32 ago
+  10    5000.00d0.a518    DYNAMIC     Vx1        2       0:00:57 ago
+4094    5000.0087.d6b1    DYNAMIC     Vx1        1       2:28:50 ago
+4094    5000.008c.5cd7    DYNAMIC     Vx1        1       5:16:54 ago
+Total Mac Addresses for this criterion: 4
+```
+
+##### Leaf-02
+
+```
+Leaf-02#show mlag
+MLAG Configuration:
+domain-id                          :            Arista-1
+local-interface                    :            Vlan4094
+peer-address                       :         192.168.0.2
+peer-link                          :      Port-Channel10
+peer-config                        :          consistent
+
+MLAG Status:
+state                              :              Active
+negotiation status                 :           Connected
+peer-link status                   :                  Up
+local-int status                   :                  Up
+system-id                          :   52:00:00:87:d6:b1
+dual-primary detection             :            Disabled
+dual-primary interface errdisabled :               False
+
+MLAG Ports:
+Disabled                           :                   0
+Configured                         :                   0
+Inactive                           :                   0
+Active-partial                     :                   0
+Active-full                        :                   1
+```
+
+```
+Leaf-02#show mlag interfaces detail
+                                        local/remote
+ mlag         state   local   remote    oper    config    last change   changes
+------ ------------- ------- -------- ------- ---------- -------------- -------
+   10   active-full    Po15     Po15   up/up   ena/ena    2:05:55 ago         8
+
+```
+
+```
+Leaf-02#show mac address-table
+          Mac Address Table
+------------------------------------------------------------------
+
+Vlan    Mac Address       Type        Ports      Moves   Last Move
+----    -----------       ----        -----      -----   ---------
+  10    0050.7966.680f    DYNAMIC     Vx1        1       0:10:43 ago
+  10    5000.00d0.a518    DYNAMIC     Po15       1       0:10:43 ago
+  20    5000.008c.5cd7    STATIC      Po10
+4093    5000.008c.5cd7    DYNAMIC     Vx1        1       2:31:03 ago
+4094    5000.008c.5cd7    STATIC      Po10
+Total Mac Addresses for this criterion: 5
+```
+
+##### Leaf-03
+
+```
+Leaf-03#show mlag
+MLAG Configuration:
+domain-id                          :            Arista-1
+local-interface                    :            Vlan4094
+peer-address                       :         192.168.0.1
+peer-link                          :      Port-Channel10
+peer-config                        :          consistent
+
+MLAG Status:
+state                              :              Active
+negotiation status                 :           Connected
+peer-link status                   :                  Up
+local-int status                   :                  Up
+system-id                          :   52:00:00:87:d6:b1
+dual-primary detection             :            Disabled
+dual-primary interface errdisabled :               False
+
+MLAG Ports:
+Disabled                           :                   0
+Configured                         :                   0
+Inactive                           :                   0
+Active-partial                     :                   0
+Active-full                        :                   1
+```
+
+```
+Leaf-03#show mlag interfaces detail
+                                        local/remote
+ mlag         state   local   remote    oper    config    last change   changes
+------ ------------- ------- -------- ------- ---------- -------------- -------
+   10   active-full    Po15     Po15   up/up   ena/ena    2:08:43 ago         7
+```
+
+```
+Leaf-03#show mac address-table
+          Mac Address Table
+------------------------------------------------------------------
+
+Vlan    Mac Address       Type        Ports      Moves   Last Move
+----    -----------       ----        -----      -----   ---------
+  10    0050.7966.680f    DYNAMIC     Vx1        1       0:13:27 ago
+  10    5000.00d0.a518    DYNAMIC     Po15       1       0:13:28 ago
+  20    5000.0087.d6b1    STATIC      Po10
+4093    5000.0087.d6b1    DYNAMIC     Vx1        1       2:33:46 ago
+4094    5000.0087.d6b1    STATIC      Po10
+Total Mac Addresses for this criterion: 5
+```
+
+##### Иммитируем обрыв линка: 
+```
+Leaf-02#show interfaces status
+Port       Name                    Status       Vlan     Duplex Speed  Type            Flags Encapsulation
+Et1        ### to_Spine-1_eth2 ### connected    routed   full   10G    EbraTestPhyPort
+Et2        ### to_Spine-2_eth2 ### connected    routed   full   10G    EbraTestPhyPort
+Et3        ### Client-2 ###        connected    20       full   10G    EbraTestPhyPort
+Et4                                connected    1        full   10G    EbraTestPhyPort
+Et5        ### to_M-LAG_client ### notconnect   in Po15  full   10G    EbraTestPhyPort
+Et6                                connected    1        full   10G    EbraTestPhyPort
+Et7        ### Peer-link ###       connected    in Po10  full   10G    EbraTestPhyPort
+Et8        ### Peer-link ###       connected    in Po10  full   10G    EbraTestPhyPort
+Ma1                                connected    routed   a-full a-1G   10/100/1000
+Po10       ### M-LAG peer-link ### connected    trunk    full   20G    N/A
+Po15                               notconnect   10       full   10G    N/A
+```
+
+##### MAC-аддрес пропал: 
+```
+Leaf-02#show mac address-table
+          Mac Address Table
+------------------------------------------------------------------
+
+Vlan    Mac Address       Type        Ports      Moves   Last Move
+----    -----------       ----        -----      -----   ---------
+  10    0050.7966.680f    DYNAMIC     Vx1        1       0:17:21 ago
+  10    5000.00d0.a518    DYNAMIC     Po10       1       0:02:37 ago
+  20    5000.008c.5cd7    STATIC      Po10
+4093    5000.008c.5cd7    DYNAMIC     Vx1        1       2:37:41 ago
+4094    5000.008c.5cd7    STATIC      Po10
+Total Mac Addresses for this criterion: 5
+```
+
+##### Сlient-3 доступен потерь нет: 
+
+```
+84 bytes from 10.1.3.125 icmp_seq=1097 ttl=64 time=31.578 ms
+84 bytes from 10.1.3.125 icmp_seq=1098 ttl=64 time=30.595 ms
+84 bytes from 10.1.3.125 icmp_seq=1099 ttl=64 time=32.066 ms
+84 bytes from 10.1.3.125 icmp_seq=1100 ttl=64 time=68.795 ms
+84 bytes from 10.1.3.125 icmp_seq=1101 ttl=64 time=77.486 ms
+84 bytes from 10.1.3.125 icmp_seq=1102 ttl=64 time=39.622 ms
+84 bytes from 10.1.3.125 icmp_seq=1103 ttl=64 time=36.421 ms
+84 bytes from 10.1.3.125 icmp_seq=1104 ttl=64 time=29.008 ms
+84 bytes from 10.1.3.125 icmp_seq=1105 ttl=64 time=26.942 ms
+84 bytes from 10.1.3.125 icmp_seq=1106 ttl=64 time=32.487 ms
+84 bytes from 10.1.3.125 icmp_seq=1107 ttl=64 time=35.316 ms
+84 bytes from 10.1.3.125 icmp_seq=1108 ttl=64 time=42.506 ms
+84 bytes from 10.1.3.125 icmp_seq=1109 ttl=64 time=30.821 ms
+84 bytes from 10.1.3.125 icmp_seq=1110 ttl=64 time=52.136 ms
+84 bytes from 10.1.3.125 icmp_seq=1111 ttl=64 time=71.166 ms
+84 bytes from 10.1.3.125 icmp_seq=1112 ttl=64 time=46.335 ms
+84 bytes from 10.1.3.125 icmp_seq=1113 ttl=64 time=39.683 ms
+84 bytes from 10.1.3.125 icmp_seq=1114 ttl=64 time=32.801 ms
+```
+
+
+
+
