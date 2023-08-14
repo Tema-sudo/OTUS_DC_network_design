@@ -592,7 +592,7 @@ Po10       ### M-LAG peer-link ### connected    trunk    full   20G    N/A
 Po15                               notconnect   10       full   10G    N/A
 ```
 
-##### MAC-аддрес пропал: 
+##### MAC-адрес пропал: 
 ```
 Leaf-02#show mac address-table
           Mac Address Table
