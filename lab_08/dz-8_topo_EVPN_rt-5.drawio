@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2023-08-15T07:49:31.720Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36" etag="2SiHQUHdmidw7r-OnubA" version="21.6.8" type="github">
+<mxfile host="app.diagrams.net" modified="2023-08-15T08:16:37.906Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36" etag="cBqG1e9lDLJ579oLxQYL" version="21.6.8" type="github">
   <diagram name="Page-1" id="c37626ed-c26b-45fb-9056-f9ebc6bb27b6">
-    <mxGraphModel dx="1071" dy="561" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" background="none" math="0" shadow="0">
+    <mxGraphModel dx="1300" dy="681" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" background="none" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -129,7 +129,7 @@
           <mxGeometry x="849" y="419" width="59" height="60" as="geometry" />
         </mxCell>
         <mxCell id="hgnLhlOXLDX8HSQQPNeT-11" value="" style="shape=mxgraph.cisco.servers.fileserver;sketch=0;html=1;pointerEvents=1;dashed=0;fillColor=#036897;strokeColor=#ffffff;strokeWidth=2;verticalLabelPosition=bottom;verticalAlign=top;align=center;outlineConnect=0;" parent="1" vertex="1">
-          <mxGeometry x="506" y="552" width="58" height="82" as="geometry" />
+          <mxGeometry x="347.12" y="552" width="58" height="82" as="geometry" />
         </mxCell>
         <mxCell id="hgnLhlOXLDX8HSQQPNeT-15" style="edgeStyle=none;rounded=0;hachureGap=4;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;exitPerimeter=0;fontFamily=Architects Daughter;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DArchitects%2BDaughter;fontSize=16;strokeColor=#EA6B66;endArrow=none;endFill=0;strokeWidth=3;entryX=0.5;entryY=1;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" source="hgnLhlOXLDX8HSQQPNeT-11" target="hgnLhlOXLDX8HSQQPNeT-7" edge="1">
           <mxGeometry relative="1" as="geometry">
@@ -144,7 +144,7 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="hgnLhlOXLDX8HSQQPNeT-18" value="PC-1&lt;br&gt;IP: 10.1.3.126/25" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=20;fontFamily=Helvetica;horizontal=1;" parent="1" vertex="1">
-          <mxGeometry x="450" y="650" width="161" height="14" as="geometry" />
+          <mxGeometry x="295.62" y="650" width="161" height="14" as="geometry" />
         </mxCell>
         <mxCell id="C9soJnvK-WdOjWq8ESSx-10" value="" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#660066;strokeWidth=1;" parent="1" vertex="1">
           <mxGeometry x="28" y="90" width="339" height="90" as="geometry" />
@@ -187,6 +187,9 @@
         </mxCell>
         <mxCell id="hP2QszLyOP73C7yzCdP5-2" value="PC-1&lt;br&gt;IP: 10.1.3.126/25" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=20;fontFamily=Helvetica;horizontal=1;" vertex="1" parent="1">
           <mxGeometry x="898.5" y="647" width="161" height="14" as="geometry" />
+        </mxCell>
+        <mxCell id="hP2QszLyOP73C7yzCdP5-3" value="" style="shape=mxgraph.cisco.servers.fileserver;sketch=0;html=1;pointerEvents=1;dashed=0;fillColor=#036897;strokeColor=#ffffff;strokeWidth=2;verticalLabelPosition=bottom;verticalAlign=top;align=center;outlineConnect=0;" vertex="1" parent="1">
+          <mxGeometry x="556" y="552" width="58" height="82" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
