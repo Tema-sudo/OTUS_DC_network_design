@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2023-08-16T05:40:26.742Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36" etag="27J1JKe6y1q90ldtIPMo" version="21.6.8" type="github">
+<mxfile host="app.diagrams.net" modified="2023-08-16T05:44:33.158Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36" etag="GpHUPDjLWA8Igo2fJg-T" version="21.6.8" type="github">
   <diagram name="Page-1" id="c37626ed-c26b-45fb-9056-f9ebc6bb27b6">
-    <mxGraphModel dx="1574" dy="841" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" background="none" math="0" shadow="0">
+    <mxGraphModel dx="1095" dy="585" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" background="none" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -177,7 +177,7 @@
           <mxGeometry x="698" y="443" width="140" height="23" as="geometry" />
         </mxCell>
         <mxCell id="6Dfauh0U3FbBK-AMj__--1" value="" style="shape=mxgraph.cisco.switches.layer_3_switch;sketch=0;html=1;pointerEvents=1;dashed=0;fillColor=#036897;strokeColor=#ffffff;strokeWidth=2;verticalLabelPosition=bottom;verticalAlign=top;align=center;outlineConnect=0;hachureGap=4;jiggle=2;curveFitting=1;fontFamily=Architects Daughter;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DArchitects%2BDaughter;fontSize=20;" parent="1" vertex="1">
-          <mxGeometry x="726" y="550" width="59" height="60" as="geometry" />
+          <mxGeometry x="723" y="559.75" width="59" height="60" as="geometry" />
         </mxCell>
         <mxCell id="hP2QszLyOP73C7yzCdP5-1" value="" style="shape=mxgraph.cisco.servers.fileserver;sketch=0;html=1;pointerEvents=1;dashed=0;fillColor=#036897;strokeColor=#ffffff;strokeWidth=2;verticalLabelPosition=bottom;verticalAlign=top;align=center;outlineConnect=0;" parent="1" vertex="1">
           <mxGeometry x="885.13" y="559.75" width="58" height="82" as="geometry" />
@@ -216,7 +216,7 @@
           <mxGeometry x="100" y="648.25" width="51" height="14" as="geometry" />
         </mxCell>
         <mxCell id="hP2QszLyOP73C7yzCdP5-15" value="Client-4&lt;br&gt;IP: 10.1.3.3/26" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=20;fontFamily=Helvetica;horizontal=1;" parent="1" vertex="1">
-          <mxGeometry x="677" y="620" width="161" height="32.5" as="geometry" />
+          <mxGeometry x="672" y="628.5" width="161" height="32.5" as="geometry" />
         </mxCell>
         <mxCell id="ZDckXh34MtZsBpy-SGGz-1" value="" style="shape=mxgraph.cisco.servers.fileserver;sketch=0;html=1;pointerEvents=1;dashed=0;fillColor=#036897;strokeColor=#ffffff;strokeWidth=2;verticalLabelPosition=bottom;verticalAlign=top;align=center;outlineConnect=0;" vertex="1" parent="1">
           <mxGeometry x="555" y="561.75" width="58" height="82" as="geometry" />
