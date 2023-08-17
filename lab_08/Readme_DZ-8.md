@@ -563,6 +563,46 @@ router bgp 65003
 
 ##### BR
 ```
-
+!
+hostname BR
+!
+interface Ethernet1
+   no switchport
+!
+interface Ethernet1.11
+   description ###_border-vrf-1_###
+   encapsulation dot1q vlan 11
+   ip address 172.16.1.2/30
+!
+interface Ethernet1.22
+   description ###_border-vrf-2_###
+   encapsulation dot1q vlan 22
+   ip address 172.16.2.2/30
+!
+interface Ethernet1.33
+   description ###_border-vrf-3_###
+   encapsulation dot1q vlan 33
+   ip address 172.16.3.2/30
+!
+interface Loopback0
+   description ###_router-id_###
+   ip address 10.1.0.254/32
+!
+interface Loopback1
+   description ###_external_###
+   ip address 8.8.8.8/32
+!
+ip routing
+!
+router bgp 4260232685
+   neighbor 172.16.1.1 remote-as 4259905537
+   neighbor 172.16.1.1 next-hop-self
+   neighbor 172.16.2.1 remote-as 4259905538
+   neighbor 172.16.2.1 next-hop-self
+   neighbor 172.16.3.1 remote-as 4259905539
+   neighbor 172.16.3.1 next-hop-self
+   aggregate-address 8.0.0.0/8 summary-only
+   redistribute connected
+!
 ```
 
