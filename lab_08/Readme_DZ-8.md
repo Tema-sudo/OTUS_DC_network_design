@@ -903,3 +903,135 @@ Leaf-03#show bgp evpn route-type ip-prefix ipv4
                                  10.1.2.1              -       100     0       65000 65001 i
 ```
 
+Рассмотрим таблицы маршрутизации VRF. Убедимся, что агрегированный префикс c BR и сети других VRF устанавливаются. 
+
+##### Leaf-01
+```
+Leaf-01#show ip route vrf vrf-1
+
+VRF: vrf-1
+
+ B E      8.0.0.0/8 [200/0] via 172.16.1.2, Ethernet3.11
+ B E      10.1.0.254/32 [200/0] via 172.16.1.2, Ethernet3.11
+ B E      10.1.3.0/26 [200/0] via VTEP 10.1.2.3 VNI 1 router-mac 50:00:00:8c:5c:d7 local-interface Vxlan1
+                              via VTEP 10.1.2.2 VNI 1 router-mac 50:00:00:87:d6:b1 local-interface Vxlan1
+ B E      10.1.3.64/26 [200/0] via 172.16.1.2, Ethernet3.11
+ B E      10.1.3.128/26 [200/0] via 172.16.1.2, Ethernet3.11
+ C        172.16.1.0/30 is directly connected, Ethernet3.11
+ B E      172.16.2.0/30 [200/0] via 172.16.1.2, Ethernet3.11
+ B E      172.16.3.0/30 [200/0] via 172.16.1.2, Ethernet3.11
+
+
+Leaf-01#show ip route vrf vrf-2
+
+VRF: vrf-2
+
+ B E      8.0.0.0/8 [200/0] via 172.16.2.2, Ethernet3.22
+ B E      10.1.0.254/32 [200/0] via 172.16.2.2, Ethernet3.22
+ B E      10.1.3.0/26 [200/0] via 172.16.2.2, Ethernet3.22
+ B E      10.1.3.64/26 [200/0] via VTEP 10.1.2.3 VNI 2 router-mac 50:00:00:8c:5c:d7 local-interface Vxlan1
+                               via VTEP 10.1.2.2 VNI 2 router-mac 50:00:00:87:d6:b1 local-interface Vxlan1
+ B E      10.1.3.128/26 [200/0] via 172.16.2.2, Ethernet3.22
+ B E      172.16.1.0/30 [200/0] via 172.16.2.2, Ethernet3.22
+ C        172.16.2.0/30 is directly connected, Ethernet3.22
+ B E      172.16.3.0/30 [200/0] via 172.16.2.2, Ethernet3.22
+
+
+Leaf-01#show ip route vrf vrf-3
+
+VRF: vrf-3
+
+ B E      8.0.0.0/8 [200/0] via 172.16.3.2, Ethernet3.33
+ B E      10.1.0.254/32 [200/0] via 172.16.3.2, Ethernet3.33
+ B E      10.1.3.0/26 [200/0] via 172.16.3.2, Ethernet3.33
+ B E      10.1.3.64/26 [200/0] via 172.16.3.2, Ethernet3.33
+ B E      10.1.3.128/26 [200/0] via VTEP 10.1.2.3 VNI 3 router-mac 50:00:00:8c:5c:d7 local-interface Vxlan1
+                                via VTEP 10.1.2.2 VNI 3 router-mac 50:00:00:87:d6:b1 local-interface Vxlan1
+ B E      172.16.1.0/30 [200/0] via 172.16.3.2, Ethernet3.33
+ B E      172.16.2.0/30 [200/0] via 172.16.3.2, Ethernet3.33
+ C        172.16.3.0/30 is directly connected, Ethernet3.33
+```
+
+##### Leaf-02 
+```
+Leaf-02#show ip route vrf vrf-1
+
+VRF: vrf-1
+
+ B E      8.0.0.0/8 [200/0] via VTEP 10.1.2.1 VNI 1 router-mac 50:00:00:a1:7a:a7 local-interface Vxlan1
+ B E      10.1.0.254/32 [200/0] via VTEP 10.1.2.1 VNI 1 router-mac 50:00:00:a1:7a:a7 local-interface Vxlan1
+ C        10.1.3.0/26 is directly connected, Vlan10
+ B E      10.1.3.64/26 [200/0] via VTEP 10.1.2.1 VNI 1 router-mac 50:00:00:a1:7a:a7 local-interface Vxlan1
+ B E      10.1.3.128/26 [200/0] via VTEP 10.1.2.1 VNI 1 router-mac 50:00:00:a1:7a:a7 local-interface Vxlan1
+ B E      172.16.1.0/30 [200/0] via VTEP 10.1.2.1 VNI 1 router-mac 50:00:00:a1:7a:a7 local-interface Vxlan1
+ B E      172.16.2.0/30 [200/0] via VTEP 10.1.2.1 VNI 1 router-mac 50:00:00:a1:7a:a7 local-interface Vxlan1
+ B E      172.16.3.0/30 [200/0] via VTEP 10.1.2.1 VNI 1 router-mac 50:00:00:a1:7a:a7 local-interface Vxlan1
+
+Leaf-02#show ip route vrf vrf-2
+
+VRF: vrf-2
+
+ B E      8.0.0.0/8 [200/0] via VTEP 10.1.2.1 VNI 2 router-mac 50:00:00:a1:7a:a7 local-interface Vxlan1
+ B E      10.1.0.254/32 [200/0] via VTEP 10.1.2.1 VNI 2 router-mac 50:00:00:a1:7a:a7 local-interface Vxlan1
+ B E      10.1.3.0/26 [200/0] via VTEP 10.1.2.1 VNI 2 router-mac 50:00:00:a1:7a:a7 local-interface Vxlan1
+ C        10.1.3.64/26 is directly connected, Vlan20
+ B E      10.1.3.128/26 [200/0] via VTEP 10.1.2.1 VNI 2 router-mac 50:00:00:a1:7a:a7 local-interface Vxlan1
+ B E      172.16.1.0/30 [200/0] via VTEP 10.1.2.1 VNI 2 router-mac 50:00:00:a1:7a:a7 local-interface Vxlan1
+ B E      172.16.2.0/30 [200/0] via VTEP 10.1.2.1 VNI 2 router-mac 50:00:00:a1:7a:a7 local-interface Vxlan1
+ B E      172.16.3.0/30 [200/0] via VTEP 10.1.2.1 VNI 2 router-mac 50:00:00:a1:7a:a7 local-interface Vxlan1
+
+Leaf-02#show ip route vrf vrf-3
+
+VRF: vrf-3
+
+ B E      8.0.0.0/8 [200/0] via VTEP 10.1.2.1 VNI 3 router-mac 50:00:00:a1:7a:a7 local-interface Vxlan1
+ B E      10.1.0.254/32 [200/0] via VTEP 10.1.2.1 VNI 3 router-mac 50:00:00:a1:7a:a7 local-interface Vxlan1
+ B E      10.1.3.0/26 [200/0] via VTEP 10.1.2.1 VNI 3 router-mac 50:00:00:a1:7a:a7 local-interface Vxlan1
+ B E      10.1.3.64/26 [200/0] via VTEP 10.1.2.1 VNI 3 router-mac 50:00:00:a1:7a:a7 local-interface Vxlan1
+ C        10.1.3.128/26 is directly connected, Vlan30
+ B E      172.16.1.0/30 [200/0] via VTEP 10.1.2.1 VNI 3 router-mac 50:00:00:a1:7a:a7 local-interface Vxlan1
+ B E      172.16.2.0/30 [200/0] via VTEP 10.1.2.1 VNI 3 router-mac 50:00:00:a1:7a:a7 local-interface Vxlan1
+ B E      172.16.3.0/30 [200/0] via VTEP 10.1.2.1 VNI 3 router-mac 50:00:00:a1:7a:a7 local-interface Vxlan1
+```
+
+##### Leaf-03
+```
+Leaf-03#show ip route vrf vrf-1
+
+VRF: vrf-1
+
+ B E      8.0.0.0/8 [200/0] via VTEP 10.1.2.1 VNI 1 router-mac 50:00:00:a1:7a:a7 local-interface Vxlan1
+ B E      10.1.0.254/32 [200/0] via VTEP 10.1.2.1 VNI 1 router-mac 50:00:00:a1:7a:a7 local-interface Vxlan1
+ C        10.1.3.0/26 is directly connected, Vlan10
+ B E      10.1.3.64/26 [200/0] via VTEP 10.1.2.1 VNI 1 router-mac 50:00:00:a1:7a:a7 local-interface Vxlan1
+ B E      10.1.3.128/26 [200/0] via VTEP 10.1.2.1 VNI 1 router-mac 50:00:00:a1:7a:a7 local-interface Vxlan1
+ B E      172.16.1.0/30 [200/0] via VTEP 10.1.2.1 VNI 1 router-mac 50:00:00:a1:7a:a7 local-interface Vxlan1
+ B E      172.16.2.0/30 [200/0] via VTEP 10.1.2.1 VNI 1 router-mac 50:00:00:a1:7a:a7 local-interface Vxlan1
+ B E      172.16.3.0/30 [200/0] via VTEP 10.1.2.1 VNI 1 router-mac 50:00:00:a1:7a:a7 local-interface Vxlan1
+
+Leaf-03#show ip route vrf vrf-2
+
+VRF: vrf-2
+
+ B E      8.0.0.0/8 [200/0] via VTEP 10.1.2.1 VNI 2 router-mac 50:00:00:a1:7a:a7 local-interface Vxlan1
+ B E      10.1.0.254/32 [200/0] via VTEP 10.1.2.1 VNI 2 router-mac 50:00:00:a1:7a:a7 local-interface Vxlan1
+ B E      10.1.3.0/26 [200/0] via VTEP 10.1.2.1 VNI 2 router-mac 50:00:00:a1:7a:a7 local-interface Vxlan1
+ C        10.1.3.64/26 is directly connected, Vlan20
+ B E      10.1.3.128/26 [200/0] via VTEP 10.1.2.1 VNI 2 router-mac 50:00:00:a1:7a:a7 local-interface Vxlan1
+ B E      172.16.1.0/30 [200/0] via VTEP 10.1.2.1 VNI 2 router-mac 50:00:00:a1:7a:a7 local-interface Vxlan1
+ B E      172.16.2.0/30 [200/0] via VTEP 10.1.2.1 VNI 2 router-mac 50:00:00:a1:7a:a7 local-interface Vxlan1
+ B E      172.16.3.0/30 [200/0] via VTEP 10.1.2.1 VNI 2 router-mac 50:00:00:a1:7a:a7 local-interface Vxlan1
+
+Leaf-03#show ip route vrf vrf-3
+
+VRF: vrf-3
+
+ B E      8.0.0.0/8 [200/0] via VTEP 10.1.2.1 VNI 3 router-mac 50:00:00:a1:7a:a7 local-interface Vxlan1
+ B E      10.1.0.254/32 [200/0] via VTEP 10.1.2.1 VNI 3 router-mac 50:00:00:a1:7a:a7 local-interface Vxlan1
+ B E      10.1.3.0/26 [200/0] via VTEP 10.1.2.1 VNI 3 router-mac 50:00:00:a1:7a:a7 local-interface Vxlan1
+ B E      10.1.3.64/26 [200/0] via VTEP 10.1.2.1 VNI 3 router-mac 50:00:00:a1:7a:a7 local-interface Vxlan1
+ C        10.1.3.128/26 is directly connected, Vlan30
+ B E      172.16.1.0/30 [200/0] via VTEP 10.1.2.1 VNI 3 router-mac 50:00:00:a1:7a:a7 local-interface Vxlan1
+ B E      172.16.2.0/30 [200/0] via VTEP 10.1.2.1 VNI 3 router-mac 50:00:00:a1:7a:a7 local-interface Vxlan1
+ B E      172.16.3.0/30 [200/0] via VTEP 10.1.2.1 VNI 3 router-mac 50:00:00:a1:7a:a7 local-interface Vxlan1
+```
