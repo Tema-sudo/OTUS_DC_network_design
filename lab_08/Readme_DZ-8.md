@@ -64,8 +64,6 @@ router bgp 65000
 !
 hostname Leaf-01
 !
-spanning-tree mode mstp
-!
 vlan 10
    name _vrf-1_
 !
@@ -215,12 +213,352 @@ router bgp 65001
 
 ##### Leaf-02 
 ```
-
+!
+hostname Leaf-02
+!
+vlan 10
+   name _vrf-1_
+!
+vlan 20
+   name _vrf-2_
+!
+vlan 30
+   name _vrf-3_
+!
+vlan 4094
+   name for_M-LAG
+!
+vrf instance vrf-1
+!
+vrf instance vrf-2
+!
+vrf instance vrf-3
+!
+interface Port-Channel10
+   description ### M-LAG peer-link ###
+   switchport mode trunk
+!
+interface Port-Channel15
+   description ###_vrf-1_###
+   switchport access vlan 10
+   mlag 10
+!
+interface Ethernet1
+   description ### to_Spine-1_eth2 ###
+   no switchport
+   ip address 10.1.5.3/31
+!
+interface Ethernet2
+   description ### to_Spine-2_eth2 ###
+   no switchport
+   ip address 10.1.5.9/31
+!
+interface Ethernet3
+   description ###_vrf-1_###
+   switchport access vlan 10
+!
+interface Ethernet4
+   description ###_vrf-2_###
+   switchport access vlan 20
+!
+interface Ethernet5
+   description ### to_M-LAG_client ###
+   channel-group 15 mode active
+!
+interface Ethernet6
+   description ###_vrf-3_###
+   switchport access vlan 30
+!
+interface Ethernet7
+   description ### Peer-link ###
+   channel-group 10 mode active
+!
+interface Ethernet8
+   description ### Peer-link ###
+   channel-group 10 mode active
+!
+interface Loopback0
+   ip address 10.1.1.2/32
+!
+interface Loopback1
+   ip address 10.1.2.2/32
+   ip address 10.1.2.20/32 secondary
+!
+interface Vlan10
+   description ###_vrf-1_###
+   vrf vrf-1
+   ip address virtual 10.1.3.1/26
+!
+interface Vlan20
+   description ###_vrf-2_###
+   vrf vrf-2
+   ip address virtual 10.1.3.65/26
+!
+interface Vlan30
+   description ###_vrf-3_###
+   vrf vrf-3
+   ip address virtual 10.1.3.129/26
+!
+interface Vlan4094
+   description ### M-LAG peer-link ###
+   ip address 192.168.0.1/30
+!
+interface Vxlan1
+   vxlan source-interface Loopback1
+   vxlan udp-port 4789
+   vxlan vlan 10-20,30 vni 10010-10020,10030
+   vxlan vrf vrf-1 vni 1
+   vxlan vrf vrf-2 vni 2
+   vxlan vrf vrf-3 vni 3
+   vxlan vlan 10 flood vtep 10.1.2.1
+!
+ip virtual-router mac-address 00:11:22:33:44:55
+!
+ip routing
+ip routing vrf vrf-1
+ip routing vrf vrf-2
+ip routing vrf vrf-3
+!
+ip prefix-list LOOPBACKS seq 10 permit 10.1.0.0/22 le 32
+!
+mlag configuration
+   domain-id Arista-1
+   local-interface Vlan4094
+   peer-address 192.168.0.2
+   peer-link Port-Channel10
+   dual-primary detection delay 5 action errdisable all-interfaces
+   dual-primary recovery delay mlag 15 non-mlag 30
+!
+route-map LOOPBACKS permit 10
+   match ip address prefix-list LOOPBACKS
+!
+router bgp 65002
+   router-id 10.1.1.2
+   neighbor SPINE_OVERLAY peer group
+   neighbor SPINE_OVERLAY remote-as 65000
+   neighbor SPINE_OVERLAY update-source Loopback0
+   neighbor SPINE_OVERLAY allowas-in 3
+   neighbor SPINE_OVERLAY ebgp-multihop 2
+   neighbor SPINE_OVERLAY send-community
+   neighbor SPINE_UNDERLAY peer group
+   neighbor SPINE_UNDERLAY remote-as 65000
+   neighbor SPINE_UNDERLAY allowas-in 3
+   neighbor 10.1.0.1 peer group SPINE_OVERLAY
+   neighbor 10.1.0.2 peer group SPINE_OVERLAY
+   neighbor 10.1.5.2 peer group SPINE_UNDERLAY
+   neighbor 10.1.5.8 peer group SPINE_UNDERLAY
+   redistribute connected route-map LOOPBACKS
+   !
+   vlan 10
+      rd 10.1.1.2:10010
+      route-target both 1:10010
+      redistribute learned
+   !
+   vlan 20
+      rd 10.1.1.2:10020
+      route-target both 1:10020
+      redistribute learned
+   !
+   vlan 30
+      rd 10.1.1.2:10030
+      route-target both 1:10030
+      redistribute learned
+   !
+   address-family evpn
+      neighbor SPINE_OVERLAY activate
+   !
+   address-family ipv4
+      no neighbor SPINE_OVERLAY activate
+   !
+   vrf vrf-1
+      rd 10.1.1.2:1
+      route-target import evpn 1:1
+      route-target export evpn 1:1
+      redistribute connected
+   !
+   vrf vrf-2
+      rd 10.1.1.2:2
+      route-target import evpn 1:2
+      route-target export evpn 1:2
+      redistribute connected
+   !
+   vrf vrf-3
+      rd 10.1.1.2:3
+      route-target import evpn 1:3
+      route-target export evpn 1:3
+      redistribute connected
+!
 ```
 
 ##### Leaf-03
 ```
-
+!
+hostname Leaf-03
+!
+vlan 10
+   name _vrf-1_
+!
+vlan 20
+   name _vrf-2_
+!
+vlan 30
+   name _vrf-3_
+!
+vlan 4094
+   name for_M-LAG
+!
+vrf instance vrf-1
+!
+vrf instance vrf-2
+!
+vrf instance vrf-3
+!
+interface Port-Channel10
+   description ### M-LAG peer-link ###
+   switchport mode trunk
+!
+interface Port-Channel15
+   switchport access vlan 10
+   mlag 10
+!
+interface Ethernet1
+   description ### to_Spine-1_eth3 ###
+   no switchport
+   ip address 10.1.5.5/31
+!
+interface Ethernet2
+   description ### to_Spine-2_eth3 ###
+   no switchport
+   ip address 10.1.5.11/31
+!
+interface Ethernet3
+   description ###_vrf-2_###
+   switchport access vlan 20
+!
+interface Ethernet4
+   description ###_vrf-3_###
+   switchport access vlan 30
+!
+interface Ethernet5
+   description ### to_M-LAG_client ###
+   channel-group 15 mode active
+!
+interface Ethernet7
+   description ### Peer-link ###
+   channel-group 10 mode active
+!
+interface Ethernet8
+   description ### Peer-link ###
+   channel-group 10 mode active
+!
+interface Loopback0
+   ip address 10.1.1.3/32
+!
+interface Loopback1
+   ip address 10.1.2.3/32
+!
+interface Vlan10
+   description ###_vrf-1_###
+   vrf vrf-1
+   ip address virtual 10.1.3.1/26
+!
+interface Vlan20
+   description ###_vrf-2_###
+   vrf vrf-2
+   ip address virtual 10.1.3.65/26
+!
+interface Vlan30
+   description ###_vrf-3_###
+   vrf vrf-3
+   ip address virtual 10.1.3.129/26
+!
+interface Vlan4094
+   description ### M-LAG peer-link ###
+   ip address 192.168.0.2/30
+!
+interface Vxlan1
+   vxlan source-interface Loopback1
+   vxlan udp-port 4789
+   vxlan vlan 10-20,30 vni 10010-10020,10030
+   vxlan vrf vrf-1 vni 1
+   vxlan vrf vrf-2 vni 2
+   vxlan vrf vrf-3 vni 3
+   vxlan vlan 10 flood vtep 10.1.2.1
+!
+ip virtual-router mac-address 00:11:22:33:44:55
+!
+ip routing
+ip routing vrf vrf-1
+ip routing vrf vrf-2
+ip routing vrf vrf-3
+!
+ip prefix-list LOOPBACKS seq 10 permit 10.1.0.0/22 le 32
+!
+mlag configuration
+   domain-id Arista-1
+   local-interface Vlan4094
+   peer-address 192.168.0.1
+   peer-link Port-Channel10
+!
+route-map LOOPBACKS permit 10
+   match ip address prefix-list LOOPBACKS
+!
+router bgp 65003
+   router-id 10.1.1.3
+   neighbor SPINE_OVERLAY peer group
+   neighbor SPINE_OVERLAY remote-as 65000
+   neighbor SPINE_OVERLAY update-source Loopback0
+   neighbor SPINE_OVERLAY allowas-in 3
+   neighbor SPINE_OVERLAY ebgp-multihop 10
+   neighbor SPINE_OVERLAY send-community
+   neighbor SPINE_UNDERLAY peer group
+   neighbor SPINE_UNDERLAY remote-as 65000
+   neighbor SPINE_UNDERLAY allowas-in 3
+   neighbor 10.1.0.1 peer group SPINE_OVERLAY
+   neighbor 10.1.0.2 peer group SPINE_OVERLAY
+   neighbor 10.1.5.4 peer group SPINE_UNDERLAY
+   neighbor 10.1.5.10 peer group SPINE_UNDERLAY
+   redistribute connected route-map LOOPBACKS
+   !
+   vlan 10
+      rd 10.1.1.3:10010
+      route-target both 1:10010
+      redistribute learned
+   !
+   vlan 20
+      rd 10.1.1.3:10020
+      route-target both 1:10020
+      redistribute learned
+   !
+   vlan 30
+      rd 10.1.1.3:10030
+      route-target both 1:10030
+      redistribute learned
+   !
+   address-family evpn
+      neighbor SPINE_OVERLAY activate
+   !
+   address-family ipv4
+      no neighbor SPINE_OVERLAY activate
+   !
+   vrf vrf-1
+      rd 10.1.1.3:1
+      route-target import evpn 1:1
+      route-target export evpn 1:1
+      redistribute connected
+   !
+   vrf vrf-2
+      rd 10.1.1.3:2
+      route-target import evpn 1:2
+      route-target export evpn 1:2
+      redistribute connected
+   !
+   vrf vrf-3
+      rd 10.1.1.3:3
+      route-target import evpn 1:3
+      route-target export evpn 1:3
+      redistribute connected
+!
 ```
 
 ##### BR
