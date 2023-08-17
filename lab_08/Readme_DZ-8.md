@@ -596,11 +596,8 @@ ip routing
 !
 router bgp 4260232685
    neighbor 172.16.1.1 remote-as 4259905537
-   neighbor 172.16.1.1 next-hop-self
    neighbor 172.16.2.1 remote-as 4259905538
-   neighbor 172.16.2.1 next-hop-self
    neighbor 172.16.3.1 remote-as 4259905539
-   neighbor 172.16.3.1 next-hop-self
    aggregate-address 8.0.0.0/8 summary-only
    redistribute connected
 !
