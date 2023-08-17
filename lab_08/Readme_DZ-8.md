@@ -28,3 +28,34 @@ p2p BR|172.16.1.0/30|172.16.2.0/30|172.16.3.0/30|
 
 #### 3. Настройки
 VxLAN фабрика реализована на eBGP для организации маршрутизации между VRF через BR роутер необходимо разрешить повторяющиеся номера AS в AS_PATH атрибуте.
+
+##### Spine-01/02
+```
+!
+route-map LOOPBACKS permit 10
+   match ip address prefix-list LOOPBACKS
+!
+peer-filter LEAF_AS
+   10 match as-range 65001-65003 result accept
+!
+router bgp 65000
+   router-id 10.1.0.1(2)
+   bgp listen range 10.1.1.0/24 peer-group LEAF_OVERLAY peer-filter LEAF_AS
+   bgp listen range 10.1.5.0/24 peer-group LEAF_UNDERLAY peer-filter LEAF_AS
+   neighbor LEAF_OVERLAY peer group
+   neighbor LEAF_OVERLAY update-source Loopback0
+   neighbor LEAF_OVERLAY allowas-in 3
+   neighbor LEAF_OVERLAY ebgp-multihop 2
+   neighbor LEAF_OVERLAY send-community
+   neighbor LEAF_UNDERLAY peer group
+   neighbor LEAF_UNDERLAY allowas-in 3
+   redistribute connected route-map LOOPBACKS
+   !
+   address-family evpn
+      neighbor LEAF_OVERLAY activate
+   !
+   address-family ipv4
+      no neighbor LEAF_OVERLAY activate
+!
+```
+
