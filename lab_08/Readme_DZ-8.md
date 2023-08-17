@@ -61,7 +61,156 @@ router bgp 65000
 
 ##### Leaf-01
 ```
-
+!
+hostname Leaf-01
+!
+spanning-tree mode mstp
+!
+vlan 10
+   name _vrf-1_
+!
+vlan 11
+   name _border-vrf-1_
+!
+vlan 20
+   name _vrf-2_
+!
+vlan 22
+   name _border-vrf-2_
+!
+vlan 30
+   name _vrf-3_
+!
+vlan 33
+   name _border-vrf-3_
+!
+vrf instance vrf-1
+!
+vrf instance vrf-2
+!
+vrf instance vrf-3
+!
+interface Ethernet1
+   description ### to_Spine-1_eth1 ###
+   no switchport
+   ip address 10.1.5.1/31
+!
+interface Ethernet2
+   description ### to_Spine-2_eth1 ###
+   no switchport
+   ip address 10.1.5.7/31
+!
+interface Ethernet3
+   no switchport
+!
+interface Ethernet3.11
+   description ###_border-vrf-1_###
+   encapsulation dot1q vlan 11
+   vrf vrf-1
+   ip address 172.16.1.1/30
+!
+interface Ethernet3.22
+   description ###_border-vrf-2_###
+   encapsulation dot1q vlan 22
+   vrf vrf-2
+   ip address 172.16.2.1/30
+!
+interface Ethernet3.33
+   description ###_border-vrf-3_###
+   encapsulation dot1q vlan 33
+   vrf vrf-3
+   ip address 172.16.3.1/30
+!
+interface Loopback0
+   ip address 10.1.1.1/32
+!
+interface Loopback1
+   ip address 10.1.2.1/32
+!
+interface Vlan10
+   description ###_vrf-1_###
+   vrf vrf-1
+   ip address virtual 10.1.3.1/26
+!
+interface Vlan20
+   description ###_vrf-2_###
+   vrf vrf-2
+   ip address virtual 10.1.3.65/26
+!
+interface Vlan30
+   description ###_vrf-3_###
+   vrf vrf-3
+   ip address virtual 10.1.3.129/26
+!
+interface Vxlan1
+   vxlan source-interface Loopback1
+   vxlan udp-port 4789
+   vxlan vrf vrf-1 vni 1
+   vxlan vrf vrf-2 vni 2
+   vxlan vrf vrf-3 vni 3
+!
+ip virtual-router mac-address 00:11:22:33:44:55
+!
+ip routing
+ip routing vrf vrf-1
+ip routing vrf vrf-2
+ip routing vrf vrf-3
+!
+ip prefix-list LOOPBACKS seq 10 permit 10.1.0.0/22 le 32
+!
+route-map LOOPBACKS permit 10
+   match ip address prefix-list LOOPBACKS
+!
+router bgp 65001
+   router-id 10.1.1.1
+   maximum-paths 128
+   neighbor SPINE_OVERLA peer group
+   neighbor SPINE_OVERLAY peer group
+   neighbor SPINE_OVERLAY remote-as 65000
+   neighbor SPINE_OVERLAY update-source Loopback0
+   neighbor SPINE_OVERLAY ebgp-multihop 10
+   neighbor SPINE_OVERLAY send-community
+   neighbor SPINE_UNDERLAY peer group
+   neighbor SPINE_UNDERLAY remote-as 65000
+   neighbor 10.1.0.1 peer group SPINE_OVERLAY
+   neighbor 10.1.0.2 peer group SPINE_OVERLAY
+   neighbor 10.1.5.0 peer group SPINE_UNDERLAY
+   neighbor 10.1.5.6 peer group SPINE_UNDERLAY
+   redistribute connected route-map LOOPBACKS
+   !
+   address-family evpn
+      neighbor SPINE_OVERLAY activate
+   !
+   address-family ipv4
+      no neighbor SPINE_OVERLAY activate
+   !
+   vrf vrf-1
+      rd 10.1.1.1:1
+      route-target import evpn 1:1
+      route-target export evpn 1:1
+      neighbor 172.16.1.2 remote-as 4260232685
+      neighbor 172.16.1.2 local-as 4259905537 no-prepend replace-as
+      aggregate-address 10.1.3.0/26 summary-only
+      redistribute connected
+   !
+   vrf vrf-2
+      rd 10.1.1.1:2
+      route-target import evpn 1:2
+      route-target export evpn 1:2
+      neighbor 172.16.2.2 remote-as 4260232685
+      neighbor 172.16.2.2 local-as 4259905538 no-prepend replace-as
+      aggregate-address 10.1.3.64/26 summary-only
+      redistribute connected
+   !
+   vrf vrf-3
+      rd 10.1.1.1:3
+      route-target import evpn 1:3
+      route-target export evpn 1:3
+      neighbor 172.16.3.2 remote-as 4260232685
+      neighbor 172.16.3.2 local-as 4259905539 no-prepend replace-as
+      aggregate-address 10.1.3.128/26 summary-only
+      redistribute connected
+!
 ```
 
 ##### Leaf-02 
