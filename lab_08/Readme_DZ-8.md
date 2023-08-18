@@ -1035,3 +1035,20 @@ VRF: vrf-3
  B E      172.16.2.0/30 [200/0] via VTEP 10.1.2.1 VNI 3 router-mac 50:00:00:a1:7a:a7 local-interface Vxlan1
  B E      172.16.3.0/30 [200/0] via VTEP 10.1.2.1 VNI 3 router-mac 50:00:00:a1:7a:a7 local-interface Vxlan1
 ```
+
+Убедимся, что маршрутизация с клиентских устройств осуществляется через BR
+
+Trace между VRF
+```
+PC-6> trace 10.1.3.2
+trace to 10.1.3.2, 8 hops max, press Ctrl+C to stop
+ 1   10.1.3.129   5.564 ms  3.920 ms  4.557 ms
+ 2   172.16.3.1   25.991 ms  21.684 ms  22.024 ms
+ 3   172.16.3.2   30.754 ms  22.397 ms  21.036 ms
+ 4   172.16.1.1   29.543 ms  28.780 ms  34.205 ms
+ 5   10.1.3.1   56.250 ms  56.008 ms  56.409 ms
+ 6   *10.1.3.2   476.255 ms (ICMP type:3, code:3, Destination port unreachable)  313.949 ms  *
+ 7   10.1.3.2   459.266 ms  297.481 ms  *
+ 8   10.1.3.2   801.373 ms  *  363.146 ms
+```
+
