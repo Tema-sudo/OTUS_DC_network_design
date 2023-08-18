@@ -1051,4 +1051,12 @@ trace to 10.1.3.2, 8 hops max, press Ctrl+C to stop
  7   10.1.3.2   459.266 ms  297.481 ms  *
  8   10.1.3.2   801.373 ms  *  363.146 ms
 ```
+Trace внутри VRF 
+```
+PC-6> trace 10.1.3.130
+trace to 10.1.3.130, 8 hops max, press Ctrl+C to stop
+ 1   *10.1.3.130   117.505 ms (ICMP type:3, code:3, Destination port unreachable)
+```
+
+Таким образом, цели домашней работы достигнуты EVPN route-type 5 передаются.
 
