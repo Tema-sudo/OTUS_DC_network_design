@@ -738,3 +738,210 @@ AS Path Attributes: Or-ID - Originator ID, C-LST - Cluster List, LL Nexthop - Li
                                  10.1.1.3              -       100     0       65200 65199 i
 Leaf-22#
 ```
+
+Проверка VRF таблицы маршрутизации на Leaf
+
+```
+Leaf-11#show ip route vrf VRF-1
+
+VRF: VRF-1
+Codes: C - connected, S - static, K - kernel,
+       O - OSPF, IA - OSPF inter area, E1 - OSPF external type 1,
+       E2 - OSPF external type 2, N1 - OSPF NSSA external type 1,
+       N2 - OSPF NSSA external type2, B - BGP, B I - iBGP, B E - eBGP,
+       R - RIP, I L1 - IS-IS level 1, I L2 - IS-IS level 2,
+       O3 - OSPFv3, A B - BGP Aggregate, A O - OSPF Summary,
+       NG - Nexthop Group Static Route, V - VXLAN Control Service,
+       DH - DHCP client installed default route, M - Martian,
+       DP - Dynamic Policy Route, L - VRF Leaked,
+       G  - gRIBI, RC - Route Cache Route
+
+Gateway of last resort:
+ B E      0.0.0.0/0 [200/0] via VTEP 10.1.1.3 VNI 10001 router-mac 50:00:00:00:51:83 local-interface Vxlan1
+
+ B E      10.128.0.2/32 [200/0] via VTEP 10.9.1.1 VNI 10001 router-mac 50:00:00:6b:0f:11 local-interface Vxlan1
+                                via VTEP 10.9.1.2 VNI 10001 router-mac 50:00:00:5b:6f:f5 local-interface Vxlan1
+ C        10.128.0.0/24 is directly connected, Vlan10
+ B E      10.128.0.0/16 [200/0] via VTEP 10.1.1.3 VNI 10001 router-mac 50:00:00:00:51:83 local-interface Vxlan1
+ B E      10.129.0.0/16 [200/0] via VTEP 10.9.1.254 VNI 10001 router-mac 50:00:00:6f:20:c3 local-interface Vxlan1
+
+Leaf-11#show ip route vrf VRF-2
+
+VRF: VRF-2
+Codes: C - connected, S - static, K - kernel,
+       O - OSPF, IA - OSPF inter area, E1 - OSPF external type 1,
+       E2 - OSPF external type 2, N1 - OSPF NSSA external type 1,
+       N2 - OSPF NSSA external type2, B - BGP, B I - iBGP, B E - eBGP,
+       R - RIP, I L1 - IS-IS level 1, I L2 - IS-IS level 2,
+       O3 - OSPFv3, A B - BGP Aggregate, A O - OSPF Summary,
+       NG - Nexthop Group Static Route, V - VXLAN Control Service,
+       DH - DHCP client installed default route, M - Martian,
+       DP - Dynamic Policy Route, L - VRF Leaked,
+       G  - gRIBI, RC - Route Cache Route
+
+Gateway of last resort:
+ B E      0.0.0.0/0 [200/0] via VTEP 10.1.1.3 VNI 10002 router-mac 50:00:00:00:51:83 local-interface Vxlan1
+
+ B E      10.128.0.0/16 [200/0] via VTEP 10.1.1.3 VNI 10002 router-mac 50:00:00:00:51:83 local-interface Vxlan1
+ B E      10.129.0.2/32 [200/0] via VTEP 10.9.1.1 VNI 10002 router-mac 50:00:00:6b:0f:11 local-interface Vxlan1
+                                via VTEP 10.9.1.2 VNI 10002 router-mac 50:00:00:5b:6f:f5 local-interface Vxlan1
+ C        10.129.0.0/24 is directly connected, Vlan20
+ B E      10.129.0.0/16 [200/0] via VTEP 10.1.1.3 VNI 10002 router-mac 50:00:00:00:51:83 local-interface Vxlan1
+
+Leaf-11#
+```
+
+```
+Leaf-12#show ip route vrf VRF-1
+
+VRF: VRF-1
+Codes: C - connected, S - static, K - kernel,
+       O - OSPF, IA - OSPF inter area, E1 - OSPF external type 1,
+       E2 - OSPF external type 2, N1 - OSPF NSSA external type 1,
+       N2 - OSPF NSSA external type2, B - BGP, B I - iBGP, B E - eBGP,
+       R - RIP, I L1 - IS-IS level 1, I L2 - IS-IS level 2,
+       O3 - OSPFv3, A B - BGP Aggregate, A O - OSPF Summary,
+       NG - Nexthop Group Static Route, V - VXLAN Control Service,
+       DH - DHCP client installed default route, M - Martian,
+       DP - Dynamic Policy Route, L - VRF Leaked,
+       G  - gRIBI, RC - Route Cache Route
+
+Gateway of last resort:
+ B E      0.0.0.0/0 [200/0] via VTEP 10.1.1.3 VNI 10001 router-mac 50:00:00:00:51:83 local-interface Vxlan1
+
+ B E      10.128.0.2/32 [200/0] via VTEP 10.9.1.1 VNI 10001 router-mac 50:00:00:6b:0f:11 local-interface Vxlan1
+                                via VTEP 10.9.1.2 VNI 10001 router-mac 50:00:00:5b:6f:f5 local-interface Vxlan1
+ C        10.128.0.0/24 is directly connected, Vlan10
+ B E      10.128.0.0/16 [200/0] via VTEP 10.1.1.3 VNI 10001 router-mac 50:00:00:00:51:83 local-interface Vxlan1
+ B E      10.129.0.0/16 [200/0] via VTEP 10.9.1.254 VNI 10001 router-mac 50:00:00:6f:20:c3 local-interface Vxlan1
+
+
+Leaf-12#show ip route vrf VRF-2
+
+VRF: VRF-2
+Codes: C - connected, S - static, K - kernel,
+       O - OSPF, IA - OSPF inter area, E1 - OSPF external type 1,
+       E2 - OSPF external type 2, N1 - OSPF NSSA external type 1,
+       N2 - OSPF NSSA external type2, B - BGP, B I - iBGP, B E - eBGP,
+       R - RIP, I L1 - IS-IS level 1, I L2 - IS-IS level 2,
+       O3 - OSPFv3, A B - BGP Aggregate, A O - OSPF Summary,
+       NG - Nexthop Group Static Route, V - VXLAN Control Service,
+       DH - DHCP client installed default route, M - Martian,
+       DP - Dynamic Policy Route, L - VRF Leaked,
+       G  - gRIBI, RC - Route Cache Route
+
+Gateway of last resort:
+ B E      0.0.0.0/0 [200/0] via VTEP 10.1.1.3 VNI 10002 router-mac 50:00:00:00:51:83 local-interface Vxlan1
+
+ B E      10.128.0.0/16 [200/0] via VTEP 10.1.1.3 VNI 10002 router-mac 50:00:00:00:51:83 local-interface Vxlan1
+ B E      10.129.0.2/32 [200/0] via VTEP 10.9.1.1 VNI 10002 router-mac 50:00:00:6b:0f:11 local-interface Vxlan1
+                                via VTEP 10.9.1.2 VNI 10002 router-mac 50:00:00:5b:6f:f5 local-interface Vxlan1
+ C        10.129.0.0/24 is directly connected, Vlan20
+ B E      10.129.0.0/16 [200/0] via VTEP 10.1.1.3 VNI 10002 router-mac 50:00:00:00:51:83 local-interface Vxlan1
+
+Leaf-12#
+```
+
+```
+Leaf-21#show ip route vrf VRF-1
+
+VRF: VRF-1
+Codes: C - connected, S - static, K - kernel,
+       O - OSPF, IA - OSPF inter area, E1 - OSPF external type 1,
+       E2 - OSPF external type 2, N1 - OSPF NSSA external type 1,
+       N2 - OSPF NSSA external type2, B - BGP, B I - iBGP, B E - eBGP,
+       R - RIP, I L1 - IS-IS level 1, I L2 - IS-IS level 2,
+       O3 - OSPFv3, A B - BGP Aggregate, A O - OSPF Summary,
+       NG - Nexthop Group Static Route, V - VXLAN Control Service,
+       DH - DHCP client installed default route, M - Martian,
+       DP - Dynamic Policy Route, L - VRF Leaked,
+       G  - gRIBI, RC - Route Cache Route
+
+Gateway of last resort:
+ B E      0.0.0.0/0 [200/0] via VTEP 10.1.1.3 VNI 10001 router-mac 50:00:00:00:51:83 local-interface Vxlan1
+
+ B E      10.128.0.1/32 [200/0] via VTEP 10.1.1.2 VNI 10001 router-mac 50:00:00:11:5d:47 local-interface Vxlan1
+                                via VTEP 10.1.1.1 VNI 10001 router-mac 50:00:00:d0:a5:18 local-interface Vxlan1
+ C        10.128.0.0/24 is directly connected, Vlan10
+ B E      10.128.0.0/16 [200/0] via VTEP 10.1.1.3 VNI 10001 router-mac 50:00:00:00:51:83 local-interface Vxlan1
+ B E      10.129.0.0/16 [200/0] via VTEP 10.9.1.254 VNI 10001 router-mac 50:00:00:6f:20:c3 local-interface Vxlan1
+
+Leaf-21#
+Leaf-21#
+Leaf-21#show ip route vrf VRF-2
+
+VRF: VRF-2
+Codes: C - connected, S - static, K - kernel,
+       O - OSPF, IA - OSPF inter area, E1 - OSPF external type 1,
+       E2 - OSPF external type 2, N1 - OSPF NSSA external type 1,
+       N2 - OSPF NSSA external type2, B - BGP, B I - iBGP, B E - eBGP,
+       R - RIP, I L1 - IS-IS level 1, I L2 - IS-IS level 2,
+       O3 - OSPFv3, A B - BGP Aggregate, A O - OSPF Summary,
+       NG - Nexthop Group Static Route, V - VXLAN Control Service,
+       DH - DHCP client installed default route, M - Martian,
+       DP - Dynamic Policy Route, L - VRF Leaked,
+       G  - gRIBI, RC - Route Cache Route
+
+Gateway of last resort:
+ B E      0.0.0.0/0 [200/0] via VTEP 10.1.1.3 VNI 10002 router-mac 50:00:00:00:51:83 local-interface Vxlan1
+
+ B E      10.128.0.0/16 [200/0] via VTEP 10.1.1.3 VNI 10002 router-mac 50:00:00:00:51:83 local-interface Vxlan1
+ B E      10.129.0.1/32 [200/0] via VTEP 10.1.1.2 VNI 10002 router-mac 50:00:00:11:5d:47 local-interface Vxlan1
+                                via VTEP 10.1.1.1 VNI 10002 router-mac 50:00:00:d0:a5:18 local-interface Vxlan1
+ C        10.129.0.0/24 is directly connected, Vlan20
+ B E      10.129.0.0/16 [200/0] via VTEP 10.1.1.3 VNI 10002 router-mac 50:00:00:00:51:83 local-interface Vxlan1
+
+Leaf-21#
+```
+
+```
+Leaf-22#show ip route vrf VRF-1
+
+VRF: VRF-1
+Codes: C - connected, S - static, K - kernel,
+       O - OSPF, IA - OSPF inter area, E1 - OSPF external type 1,
+       E2 - OSPF external type 2, N1 - OSPF NSSA external type 1,
+       N2 - OSPF NSSA external type2, B - BGP, B I - iBGP, B E - eBGP,
+       R - RIP, I L1 - IS-IS level 1, I L2 - IS-IS level 2,
+       O3 - OSPFv3, A B - BGP Aggregate, A O - OSPF Summary,
+       NG - Nexthop Group Static Route, V - VXLAN Control Service,
+       DH - DHCP client installed default route, M - Martian,
+       DP - Dynamic Policy Route, L - VRF Leaked,
+       G  - gRIBI, RC - Route Cache Route
+
+Gateway of last resort:
+ B E      0.0.0.0/0 [200/0] via VTEP 10.1.1.3 VNI 10001 router-mac 50:00:00:00:51:83 local-interface Vxlan1
+
+ B E      10.128.0.1/32 [200/0] via VTEP 10.1.1.2 VNI 10001 router-mac 50:00:00:11:5d:47 local-interface Vxlan1
+                                via VTEP 10.1.1.1 VNI 10001 router-mac 50:00:00:d0:a5:18 local-interface Vxlan1
+ C        10.128.0.0/24 is directly connected, Vlan10
+ B E      10.128.0.0/16 [200/0] via VTEP 10.1.1.3 VNI 10001 router-mac 50:00:00:00:51:83 local-interface Vxlan1
+ B E      10.129.0.0/16 [200/0] via VTEP 10.9.1.254 VNI 10001 router-mac 50:00:00:6f:20:c3 local-interface Vxlan1
+
+Leaf-22#show ip route vrf VRF-2
+
+VRF: VRF-2
+Codes: C - connected, S - static, K - kernel,
+       O - OSPF, IA - OSPF inter area, E1 - OSPF external type 1,
+       E2 - OSPF external type 2, N1 - OSPF NSSA external type 1,
+       N2 - OSPF NSSA external type2, B - BGP, B I - iBGP, B E - eBGP,
+       R - RIP, I L1 - IS-IS level 1, I L2 - IS-IS level 2,
+       O3 - OSPFv3, A B - BGP Aggregate, A O - OSPF Summary,
+       NG - Nexthop Group Static Route, V - VXLAN Control Service,
+       DH - DHCP client installed default route, M - Martian,
+       DP - Dynamic Policy Route, L - VRF Leaked,
+       G  - gRIBI, RC - Route Cache Route
+
+Gateway of last resort:
+ B E      0.0.0.0/0 [200/0] via VTEP 10.1.1.3 VNI 10002 router-mac 50:00:00:00:51:83 local-interface Vxlan1
+
+ B E      10.128.0.0/16 [200/0] via VTEP 10.1.1.3 VNI 10002 router-mac 50:00:00:00:51:83 local-interface Vxlan1
+ B E      10.129.0.1/32 [200/0] via VTEP 10.1.1.2 VNI 10002 router-mac 50:00:00:11:5d:47 local-interface Vxlan1
+                                via VTEP 10.1.1.1 VNI 10002 router-mac 50:00:00:d0:a5:18 local-interface Vxlan1
+ C        10.129.0.0/24 is directly connected, Vlan20
+ B E      10.129.0.0/16 [200/0] via VTEP 10.1.1.3 VNI 10002 router-mac 50:00:00:00:51:83 local-interface Vxlan1
+
+Leaf-22#
+```
+
+
