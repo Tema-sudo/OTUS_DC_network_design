@@ -255,3 +255,124 @@ rtt min/avg/max/mdev = 17.085/20.292/27.672/3.944 ms, pipe 3, ipg/ewma 18.389/23
 Srv-22#
 ```
 
+Проверка наличия BGP-EVP маршрутов на Leaf устройствах
+
+```
+Leaf-11#show bgp evpn route-type imet
+BGP routing table information for VRF default
+Router identifier 10.1.0.1, local AS number 65101
+Route status codes: s - suppressed, * - valid, > - active, E - ECMP head, e - ECMP
+                    S - Stale, c - Contributing to ECMP, b - backup
+                    % - Pending BGP convergence
+Origin codes: i - IGP, e - EGP, ? - incomplete
+AS Path Attributes: Or-ID - Originator ID, C-LST - Cluster List, LL Nexthop - Link Local Nexthop
+
+          Network                Next Hop              Metric  LocPref Weight  Path
+ * >     RD: 10.1.0.1:10 imet 10.1.1.1
+                                 -                     -       -       0       i
+ * >     RD: 10.1.0.1:20 imet 10.1.1.1
+                                 -                     -       -       0       i
+ * >Ec   RD: 10.9.0.1:10 imet 10.9.1.1
+                                 10.9.1.1              -       100     0       65100 65199 65200 65201 i
+ *  ec   RD: 10.9.0.1:10 imet 10.9.1.1
+                                 10.9.1.1              -       100     0       65100 65199 65200 65201 i
+ * >Ec   RD: 10.9.0.1:20 imet 10.9.1.1
+                                 10.9.1.1              -       100     0       65100 65299 65200 65201 i
+ *  ec   RD: 10.9.0.1:20 imet 10.9.1.1
+                                 10.9.1.1              -       100     0       65100 65199 65200 65201 i
+ * >Ec   RD: 10.9.0.2:10 imet 10.9.1.2
+                                 10.9.1.2              -       100     0       65100 65299 65200 65201 i
+ *  ec   RD: 10.9.0.2:10 imet 10.9.1.2
+                                 10.9.1.2              -       100     0       65100 65299 65200 65201 i
+ * >Ec   RD: 10.9.0.2:20 imet 10.9.1.2
+                                 10.9.1.2              -       100     0       65100 65299 65200 65201 i
+ *  ec   RD: 10.9.0.2:20 imet 10.9.1.2
+                                 10.9.1.2              -       100     0       65100 65299 65200 65201 i
+
+Leaf-11#show bgp evpn route-type mac-ip
+BGP routing table information for VRF default
+Router identifier 10.1.0.1, local AS number 65101
+Route status codes: s - suppressed, * - valid, > - active, E - ECMP head, e - ECMP
+                    S - Stale, c - Contributing to ECMP, b - backup
+                    % - Pending BGP convergence
+Origin codes: i - IGP, e - EGP, ? - incomplete
+AS Path Attributes: Or-ID - Originator ID, C-LST - Cluster List, LL Nexthop - Link Local Nexthop
+
+          Network                Next Hop              Metric  LocPref Weight  Path
+ * >     RD: 10.1.0.1:20 mac-ip 5000.0016.00e6
+                                 -                     -       -       0       i
+ * >     RD: 10.1.0.1:20 mac-ip 5000.0016.00e6 10.129.0.1
+                                 -                     -       -       0       i
+ * >Ec   RD: 10.9.0.1:20 mac-ip 5000.0074.4eca
+                                 10.9.1.1              -       100     0       65100 65199 65200 65201 i
+ *  ec   RD: 10.9.0.1:20 mac-ip 5000.0074.4eca
+                                 10.9.1.1              -       100     0       65100 65199 65200 65201 i
+ * >Ec   RD: 10.9.0.2:20 mac-ip 5000.0074.4eca
+                                 10.9.1.2              -       100     0       65100 65299 65200 65201 i
+ *  ec   RD: 10.9.0.2:20 mac-ip 5000.0074.4eca
+                                 10.9.1.2              -       100     0       65100 65299 65200 65201 i
+ * >Ec   RD: 10.9.0.1:20 mac-ip 5000.0074.4eca 10.129.0.2
+                                 10.9.1.1              -       100     0       65100 65199 65200 65201 i
+ *  ec   RD: 10.9.0.1:20 mac-ip 5000.0074.4eca 10.129.0.2
+                                 10.9.1.1              -       100     0       65100 65199 65200 65201 i
+ * >Ec   RD: 10.9.0.2:20 mac-ip 5000.0074.4eca 10.129.0.2
+                                 10.9.1.2              -       100     0       65100 65299 65200 65201 i
+ *  ec   RD: 10.9.0.2:20 mac-ip 5000.0074.4eca 10.129.0.2
+                                 10.9.1.2              -       100     0       65100 65299 65200 65201 i
+ * >     RD: 10.1.0.1:10 mac-ip 5000.00dd.cb9a
+                                 -                     -       -       0       i
+ * >     RD: 10.1.0.1:10 mac-ip 5000.00dd.cb9a 10.128.0.1
+                                 -                     -       -       0       i
+ * >Ec   RD: 10.9.0.1:10 mac-ip 5000.00f4.253d
+                                 10.9.1.1              -       100     0       65100 65299 65200 65201 i
+ *  ec   RD: 10.9.0.1:10 mac-ip 5000.00f4.253d
+                                 10.9.1.1              -       100     0       65100 65299 65200 65201 i
+ * >Ec   RD: 10.9.0.2:10 mac-ip 5000.00f4.253d
+                                 10.9.1.2              -       100     0       65100 65299 65200 65201 i
+ *  ec   RD: 10.9.0.2:10 mac-ip 5000.00f4.253d
+                                 10.9.1.2              -       100     0       65100 65299 65200 65201 i
+ * >Ec   RD: 10.9.0.1:10 mac-ip 5000.00f4.253d 10.128.0.2
+                                 10.9.1.1              -       100     0       65100 65299 65200 65201 i
+ *  ec   RD: 10.9.0.1:10 mac-ip 5000.00f4.253d 10.128.0.2
+                                 10.9.1.1              -       100     0       65100 65299 65200 65201 i
+ * >Ec   RD: 10.9.0.2:10 mac-ip 5000.00f4.253d 10.128.0.2
+                                 10.9.1.2              -       100     0       65100 65299 65200 65201 i
+ *  ec   RD: 10.9.0.2:10 mac-ip 5000.00f4.253d 10.128.0.2
+                                 10.9.1.2              -       100     0       65100 65299 65200 65201 i
+
+Leaf-11#show bgp evpn route-type ip-prefix ipv4
+BGP routing table information for VRF default
+Router identifier 10.1.0.1, local AS number 65101
+Route status codes: s - suppressed, * - valid, > - active, E - ECMP head, e - ECMP
+                    S - Stale, c - Contributing to ECMP, b - backup
+                    % - Pending BGP convergence
+Origin codes: i - IGP, e - EGP, ? - incomplete
+AS Path Attributes: Or-ID - Originator ID, C-LST - Cluster List, LL Nexthop - Link Local Nexthop
+
+          Network                Next Hop              Metric  LocPref Weight  Path
+ * >Ec   RD: 10.1.0.3:10001 ip-prefix 0.0.0.0/0
+                                 10.1.1.3              -       100     0       65100 65199 65000 ?
+ *  ec   RD: 10.1.0.3:10001 ip-prefix 0.0.0.0/0
+                                 10.1.1.3              -       100     0       65100 65199 65000 ?
+ * >Ec   RD: 10.1.0.3:10002 ip-prefix 0.0.0.0/0
+                                 10.1.1.3              -       100     0       65100 65199 65000 ?
+ *  ec   RD: 10.1.0.3:10002 ip-prefix 0.0.0.0/0
+                                 10.1.1.3              -       100     0       65100 65199 65000 ?
+ * >Ec   RD: 10.1.0.3:10001 ip-prefix 10.128.0.0/16
+                                 10.1.1.3              -       100     0       65100 65199 i
+ *  ec   RD: 10.1.0.3:10001 ip-prefix 10.128.0.0/16
+                                 10.1.1.3              -       100     0       65100 65199 i
+ * >Ec   RD: 10.1.0.3:10002 ip-prefix 10.128.0.0/16
+                                 10.1.1.3              -       100     0       65100 65199 65000 65000 i
+ *  ec   RD: 10.1.0.3:10002 ip-prefix 10.128.0.0/16
+                                 10.1.1.3              -       100     0       65100 65199 65000 65000 i
+ * >Ec   RD: 10.1.0.3:10001 ip-prefix 10.129.0.0/16
+                                 10.9.1.254            -       100     0       65100 65299 65000 65000 i
+ *  ec   RD: 10.1.0.3:10001 ip-prefix 10.129.0.0/16
+                                 10.9.1.254            -       100     0       65100 65299 65000 65000 i
+ * >Ec   RD: 10.1.0.3:10002 ip-prefix 10.129.0.0/16
+                                 10.1.1.3              -       100     0       65100 65199 i
+ *  ec   RD: 10.1.0.3:10002 ip-prefix 10.129.0.0/16
+                                 10.1.1.3              -       100     0       65100 65199 i
+Leaf-11#
+```
