@@ -193,5 +193,65 @@ rtt min/avg/max/mdev = 39.054/43.425/48.431/3.060 ms, pipe 5, ipg/ewma 10.614/45
 Srv-22#
 ```
 
+Проверка IP связности с "Интернет"
 
+```
+Srv-11#ping 8.8.8.8
+PING 8.8.8.8 (8.8.8.8) 72(100) bytes of data.
+80 bytes from 8.8.8.8: icmp_seq=1 ttl=62 time=22.4 ms
+80 bytes from 8.8.8.8: icmp_seq=2 ttl=62 time=63.6 ms
+80 bytes from 8.8.8.8: icmp_seq=3 ttl=62 time=43.2 ms
+80 bytes from 8.8.8.8: icmp_seq=4 ttl=62 time=24.7 ms
+80 bytes from 8.8.8.8: icmp_seq=5 ttl=62 time=15.7 ms
+
+--- 8.8.8.8 ping statistics ---
+5 packets transmitted, 5 received, 0% packet loss, time 87ms
+rtt min/avg/max/mdev = 15.793/33.982/63.691/17.428 ms, pipe 3, ipg/ewma 21.918/27.304 ms
+Srv-11#
+```
+
+```
+Srv-21#ping 8.8.8.8
+PING 8.8.8.8 (8.8.8.8) 72(100) bytes of data.
+80 bytes from 8.8.8.8: icmp_seq=1 ttl=62 time=20.2 ms
+80 bytes from 8.8.8.8: icmp_seq=2 ttl=62 time=16.6 ms
+80 bytes from 8.8.8.8: icmp_seq=3 ttl=62 time=16.7 ms
+80 bytes from 8.8.8.8: icmp_seq=4 ttl=62 time=16.8 ms
+80 bytes from 8.8.8.8: icmp_seq=5 ttl=62 time=17.8 ms
+
+--- 8.8.8.8 ping statistics ---
+5 packets transmitted, 5 received, 0% packet loss, time 70ms
+rtt min/avg/max/mdev = 16.668/17.656/20.210/1.347 ms, pipe 2, ipg/ewma 17.634/18.914 ms
+Srv-21#
+```
+
+```
+Srv-12#ping 8.8.8.8
+PING 8.8.8.8 (8.8.8.8) 72(100) bytes of data.
+80 bytes from 8.8.8.8: icmp_seq=1 ttl=62 time=21.2 ms
+80 bytes from 8.8.8.8: icmp_seq=2 ttl=62 time=52.9 ms
+80 bytes from 8.8.8.8: icmp_seq=3 ttl=62 time=39.2 ms
+80 bytes from 8.8.8.8: icmp_seq=4 ttl=62 time=21.8 ms
+80 bytes from 8.8.8.8: icmp_seq=5 ttl=62 time=14.9 ms
+
+--- 8.8.8.8 ping statistics ---
+5 packets transmitted, 5 received, 0% packet loss, time 83ms
+rtt min/avg/max/mdev = 14.926/30.050/52.983/14.025 ms, pipe 3, ipg/ewma 20.804/24.899 ms
+Srv-12#
+```
+
+```
+Srv-22#ping 8.8.8.8
+PING 8.8.8.8 (8.8.8.8) 72(100) bytes of data.
+80 bytes from 8.8.8.8: icmp_seq=1 ttl=62 time=27.6 ms
+80 bytes from 8.8.8.8: icmp_seq=2 ttl=62 time=21.0 ms
+80 bytes from 8.8.8.8: icmp_seq=3 ttl=62 time=18.2 ms
+80 bytes from 8.8.8.8: icmp_seq=4 ttl=62 time=17.4 ms
+80 bytes from 8.8.8.8: icmp_seq=5 ttl=62 time=17.0 ms
+
+--- 8.8.8.8 ping statistics ---
+5 packets transmitted, 5 received, 0% packet loss, time 73ms
+rtt min/avg/max/mdev = 17.085/20.292/27.672/3.944 ms, pipe 3, ipg/ewma 18.389/23.770 ms
+Srv-22#
+```
 
