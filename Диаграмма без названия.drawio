@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2023-10-04T06:36:44.354Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36" etag="bcej_gk7LMv5dgbVv-jr" version="22.0.2" type="github">
+<mxfile host="app.diagrams.net" modified="2023-10-04T06:42:47.980Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36" etag="bMIxZwOiOZj2q2ucgUWc" version="22.0.2" type="github">
   <diagram id="C5RBs43oDa-KdzZeNtuy" name="Page-1">
-    <mxGraphModel dx="3267" dy="1256" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="5111" dy="1780" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="WIyWlLk6GJQsqaUBKTNV-0" />
         <mxCell id="WIyWlLk6GJQsqaUBKTNV-1" parent="WIyWlLk6GJQsqaUBKTNV-0" />
@@ -232,6 +232,44 @@
             <mxPoint as="offset" />
             <mxPoint x="-319.99999999999994" y="570.86" as="sourcePoint" />
             <mxPoint x="-420" y="571" as="targetPoint" />
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="1htIa7qenggjRfEvTUBb-51" value="4 ШАГ.&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;&lt;span style=&quot;border-color: var(--border-color);&quot;&gt;На каждую чашу весов ставим &lt;br&gt;по 1 новому миньону&lt;br&gt;Результат?&amp;nbsp;&lt;/span&gt;" style="rhombus;whiteSpace=wrap;html=1;shadow=0;fontFamily=Helvetica;fontSize=12;align=center;strokeWidth=1;spacing=6;spacingTop=-4;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="-1052" y="490" width="215" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="1htIa7qenggjRfEvTUBb-52" value="Тот кто не взвешивался - стащил банан" style="rounded=1;whiteSpace=wrap;html=1;fontSize=12;glass=0;strokeWidth=1;shadow=0;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="-780" y="550" width="180" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="1htIa7qenggjRfEvTUBb-53" value="Миньон, стащивший банан найден" style="rounded=1;whiteSpace=wrap;html=1;fontSize=12;glass=0;strokeWidth=1;shadow=0;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="-1333" y="550" width="180" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="1htIa7qenggjRfEvTUBb-54" value="Равен" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;jettySize=auto;orthogonalLoop=1;fontSize=11;endArrow=block;endFill=0;endSize=8;strokeWidth=1;shadow=0;labelBackgroundColor=none;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="1htIa7qenggjRfEvTUBb-42" target="1htIa7qenggjRfEvTUBb-51">
+          <mxGeometry x="-0.1659" y="-10" relative="1" as="geometry">
+            <mxPoint as="offset" />
+            <mxPoint x="-530.5" y="325" as="sourcePoint" />
+            <mxPoint x="-989.5" y="405" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="-945" y="400" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="1htIa7qenggjRfEvTUBb-55" value="Равен" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;jettySize=auto;orthogonalLoop=1;fontSize=11;endArrow=block;endFill=0;endSize=8;strokeWidth=1;shadow=0;labelBackgroundColor=none;exitX=1.002;exitY=0.501;exitDx=0;exitDy=0;entryX=-0.004;entryY=0.506;entryDx=0;entryDy=0;entryPerimeter=0;exitPerimeter=0;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="1htIa7qenggjRfEvTUBb-51" target="1htIa7qenggjRfEvTUBb-52">
+          <mxGeometry x="-0.0489" y="10" relative="1" as="geometry">
+            <mxPoint as="offset" />
+            <mxPoint x="-812.0000000000001" y="570.5" as="sourcePoint" />
+            <mxPoint x="-755" y="570.5" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="-820" y="570" />
+              <mxPoint x="-820" y="571" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="1htIa7qenggjRfEvTUBb-56" value="Один перевесил&amp;nbsp;" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;jettySize=auto;orthogonalLoop=1;fontSize=11;endArrow=block;endFill=0;endSize=8;strokeWidth=1;shadow=0;labelBackgroundColor=none;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1.016;entryY=0.493;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="1htIa7qenggjRfEvTUBb-51" target="1htIa7qenggjRfEvTUBb-53">
+          <mxGeometry x="-0.052" y="-10" relative="1" as="geometry">
+            <mxPoint as="offset" />
+            <mxPoint x="-1083" y="570.77" as="sourcePoint" />
+            <mxPoint x="-1180" y="570.77" as="targetPoint" />
             <Array as="points" />
           </mxGeometry>
         </mxCell>
