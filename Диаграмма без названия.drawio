@@ -1,12 +1,9 @@
-<mxfile host="app.diagrams.net" modified="2023-10-04T06:05:02.426Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36" etag="BwVeZeqfDdL7Hj_O3kDh" version="22.0.2" type="github">
+<mxfile host="app.diagrams.net" modified="2023-10-04T06:08:04.783Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36" etag="2TPE13h_uju86nypHOJ5" version="22.0.2" type="github">
   <diagram id="C5RBs43oDa-KdzZeNtuy" name="Page-1">
-    <mxGraphModel dx="601" dy="310" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="1803" dy="929" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="WIyWlLk6GJQsqaUBKTNV-0" />
         <mxCell id="WIyWlLk6GJQsqaUBKTNV-1" parent="WIyWlLk6GJQsqaUBKTNV-0" />
-        <mxCell id="WIyWlLk6GJQsqaUBKTNV-3" value="Lamp doesn&#39;t work" style="rounded=1;whiteSpace=wrap;html=1;fontSize=12;glass=0;strokeWidth=1;shadow=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="90" y="92" width="120" height="40" as="geometry" />
-        </mxCell>
         <mxCell id="WIyWlLk6GJQsqaUBKTNV-5" value="Одна группа перевесила" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;jettySize=auto;orthogonalLoop=1;fontSize=11;endArrow=block;endFill=0;endSize=8;strokeWidth=1;shadow=0;labelBackgroundColor=none;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="WIyWlLk6GJQsqaUBKTNV-6" target="1htIa7qenggjRfEvTUBb-4" edge="1">
           <mxGeometry x="-0.1782" y="-12" relative="1" as="geometry">
             <mxPoint as="offset" />
@@ -87,6 +84,20 @@
             <Array as="points">
               <mxPoint x="986" y="490" />
               <mxPoint x="986" y="585" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="1htIa7qenggjRfEvTUBb-20" value="Тот кто не взвешивался - съел банан" style="rounded=1;whiteSpace=wrap;html=1;fontSize=12;glass=0;strokeWidth=1;shadow=0;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="1145" y="640" width="180" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="1htIa7qenggjRfEvTUBb-21" value="Равен" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;jettySize=auto;orthogonalLoop=1;fontSize=11;endArrow=block;endFill=0;endSize=8;strokeWidth=1;shadow=0;labelBackgroundColor=none;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="1htIa7qenggjRfEvTUBb-8" target="1htIa7qenggjRfEvTUBb-20">
+          <mxGeometry x="-0.087" y="10" relative="1" as="geometry">
+            <mxPoint as="offset" />
+            <mxPoint x="898.46" y="820" as="sourcePoint" />
+            <mxPoint x="1160" y="810" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="1110" y="660" />
+              <mxPoint x="1110" y="660" />
             </Array>
           </mxGeometry>
         </mxCell>
